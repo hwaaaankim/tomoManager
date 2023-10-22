@@ -1,0 +1,17 @@
+/*
+Template Name: Velzon - Admin & Dashboard Template
+Author: Themesbrand
+Website: https://themesbrand.com/
+Contact: support@themesbrand.com
+File: Custom Css File
+*/
+.info-message{
+	color:rgba(22,22,22);
+	font-weight:500;
+	font-size:12px;
+	margin-bottom:5px;
+	line-height:1.4;
+}
+#layout-wrapper > div.main-content > div > div > div > div.col > div > div:nth-child(3) > div:nth-child(2) > div > div.card-body > div.table-responsive.table-card > table > tbody > tr > td:nth-child(2){
+	text-align:right;
+}

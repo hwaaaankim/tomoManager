@@ -1,0 +1,207 @@
+<!doctype html>
+<html xmlns:th = "http://www.thymeleaf.org"
+ lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+
+<head th:fragment="headSrc">
+
+    <meta charset="utf-8" />
+    <title>SNSTOMO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="#" name="description" />
+    <meta content="#" name="author" />
+    <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <script src="/assets/js/layout.js"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/assets/css/icons.min.css" rel="stylesheet"/>
+    <link href="/assets/css/app.min.css" rel="stylesheet" />
+    <link href="/assets/css/custom.css" rel="stylesheet"/>
+    <link href="/assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet"/>
+
+</head>
+
+<body>
+	<th:block th:fragment="headerSrc">
+		<header id="page-topbar">
+			<div class="layout-width">
+				<div class="navbar-header">
+					<div class="d-flex">
+						<div class="navbar-brand-box horizontal-logo">
+							<a href="/index" class="logo logo-dark"> <span
+								class="logo-sm"> <img src="images/logo-sm.png" alt=""
+									height="22">
+							</span> <span class="logo-lg"> <img src="images/logo-dark.png"
+									alt="" height="17">
+							</span>
+							</a> <a href="/index" class="logo logo-light"> <span
+								class="logo-sm"> <img src="images/logo-sm.png" alt=""
+									height="22">
+							</span> <span class="logo-lg"> <img src="images/logo-light.png"
+									alt="" height="17">
+							</span>
+							</a>
+						</div>
+
+						<button type="button"
+							class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
+							id="topnav-hamburger-icon">
+							<span class="hamburger-icon"> <span></span> <span></span>
+								<span></span>
+							</span>
+						</button>
+
+					</div>
+
+					<div class="d-flex align-items-center">
+
+						<div class="ms-1 header-item d-none d-sm-flex">
+							<button type="button"
+								class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
+								<i class='bx bx-moon fs-22'></i>
+							</button>
+						</div>
+
+						<div class="dropdown ms-sm-3 header-item topbar-user">
+							<button type="button" class="btn" id="page-header-user-dropdown"
+								data-bs-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								<span class="d-flex align-items-center"> <span
+									class="text-start ms-xl-2"> <span
+										class="d-none d-xl-inline-block ms-1 fw-semibold user-name-text">User Name</span> <span
+										class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">Grade</span>
+								</span>
+								</span>
+							</button>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="/myInfo"><i
+									class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
+									<span class="align-middle">Profile</span></a> 
+								<div class="dropdown-divider"></div>
+								<a
+									class="dropdown-item" href="/logout"><i
+									class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+									<span class="align-middle" data-key="t-logout">Logout</span></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+	</th:block>
+	<th:block th:fragment="navSrc">
+		<div class="app-menu navbar-menu">
+			<div class="navbar-brand-box">
+				<a href="/index" class="logo logo-dark"> <span
+					class="logo-sm"> <img src="images/logo-sm.png" alt=""
+						height="22">
+				</span> <span class="logo-lg"> <img src="images/logo-dark.png"
+						alt="" height="17">
+				</span>
+				</a>
+				<a href="/index" class="logo logo-light"> <span
+					class="logo-sm"> <img src="images/logo-sm.png" alt=""
+						height="22">
+				</span> <span class="logo-lg"> <img src="images/logo-light.png"
+						alt="" height="17">
+				</span>
+				</a>
+				<button type="button"
+					class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+					id="vertical-hover">
+					<i class="ri-record-circle-line"></i>
+				</button>
+			</div>
+
+			<div id="scrollbar">
+				<div class="container-fluid">
+
+					<div id="two-column-menu"></div>
+					<ul class="navbar-nav" id="navbar-nav">
+						<li class="menu-title"><span data-key="t-menu">Menu</span></li>
+						<li class="nav-item"><a class="nav-link menu-link"
+							href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
+							aria-expanded="false" aria-controls="sidebarDashboards"> <i
+								class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">My Menu</span>
+						</a>
+							<div class="collapse menu-dropdown" id="sidebarDashboards">
+								<ul class="nav nav-sm flex-column">
+									<li class="nav-item"><a href="/member/myInfo"
+										class="nav-link" data-key="t-analytics"> 내 정보 </a></li>
+									<li class="nav-item"><a href="/member/resetPassword"
+										class="nav-link" data-key="t-crm"> 비밀번호 재 설정 </a></li>
+									<li class="nav-item"><a href="/member/makeLink" class="nav-link"
+										data-key="t-ecommerce"> 링크 생성 </a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item"><a class="nav-link menu-link"
+							href="#sidebarAuth" data-bs-toggle="collapse" role="button"
+							aria-expanded="false" aria-controls="sidebarAuth"> <i
+								class="ri-account-circle-line"></i> <span
+								data-key="t-authentication">Authentication</span>
+						</a>
+							<div class="collapse menu-dropdown" id="sidebarAuth">
+								<ul class="nav nav-sm flex-column">
+									<li class="nav-item"><a href="dashboard-analytics.html"
+										class="nav-link" data-key="t-analytics"> 딜러 관리 </a></li>
+									<li class="nav-item"><a href="dashboard-analytics.html"
+										class="nav-link" data-key="t-analytics"> 서브 딜러 관리 </a></li>
+									<li class="nav-item"><a href="dashboard-crm.html"
+										class="nav-link" data-key="t-crm"> 바이어 관리 </a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item"><a class="nav-link menu-link"
+							href="#sidebarPages" data-bs-toggle="collapse" role="button"
+							aria-expanded="false" aria-controls="sidebarPages"> <i
+								class="ri-pages-line"></i> <span data-key="t-pages">Caculation</span>
+						</a>
+							<div class="collapse menu-dropdown" id="sidebarPages">
+								<ul class="nav nav-sm flex-column">
+									<li class="nav-item"><a href="dashboard-analytics.html"
+										class="nav-link" data-key="t-analytics"> 실적 정산 </a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="sidebar-background"></div>
+		</div>
+		<div class="vertical-overlay"></div>
+	</th:block>	
+	<th:block th:fragment="footerSrc">
+	    <footer class="footer">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-lg-12">
+	                    <div class="text-center">
+	                        <p class="mb-0 text-muted">&copy;
+	                            <script>document.write(new Date().getFullYear())</script> SNSTOMO. Crafted with by SNSTOMO
+	                        </p>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </footer>
+    </th:block>
+	<th:block th:fragment="scriptSrc">
+	    <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+	    <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+	    <script src="/assets/libs/node-waves/waves.min.js"></script>
+	    <script src="/assets/libs/feather-icons/feather.min.js"></script>
+	    <script src="/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+	    <script src="/assets/js/plugins.js"></script>
+	     <script src="/assets/js/app.js"></script>
+	    <script src="/assets/js/pages/particles.app.js"></script>
+	    <script src="/assets/js/pages/dashboard-ecommerce.init.js"></script>
+	    <script src="/assets/libs/swiper/swiper-bundle.min.js"></script>
+	    <script src="/assets/libs/apexcharts/apexcharts.min.js"></script>
+	    <script src="/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
+	    <script src="/assets/libs/jsvectormap/maps/world-merc.js"></script>
+	   
+    </th:block>
+</body>
+
+</html>

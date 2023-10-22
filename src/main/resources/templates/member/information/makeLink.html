@@ -1,0 +1,189 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg"
+	data-sidebar-image="none" data-preloader="disable">
+
+<head th:replace="fragments/common :: headSrc">
+
+</head>
+
+<body>
+
+	<div id="layout-wrapper">
+
+
+		<th:block th:replace="fragments/common :: headerSrc"></th:block>
+		<th:block th:replace="fragments/common :: navSrc"></th:block>
+
+		<div class="main-content">
+
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="profile-foreground position-relative mx-n4 mt-n4">
+						<div class="profile-wid-bg">
+							<img src="assets/images/profile-bg.jpg" alt=""
+								class="profile-wid-img" />
+						</div>
+					</div>
+					<div class="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
+						<div class="row g-4">
+							<div class="col">
+								<div class="p-2">
+									<h3 class="text-white mb-1">USER Name</h3>
+									<p class="text-white text-opacity-75">Grade</p>
+									<div class="hstack text-white-50 gap-1">
+										<div class="me-2">
+											<i
+												class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Dealer
+											/ Sub Dealer
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-8">
+							<div>
+								
+								<div class="tab-content pt-4 text-muted">
+									<div class="tab-pane active" id="overview-tab" role="tabpanel">
+										<div class="row">
+											<div class="col-xxl-6">
+
+												<div class="card">
+													<div class="card-body">
+														<h5 class="card-title mb-3">For Buyer</h5>
+														<div class="table-responsive">
+															<form action="/member/createLink" method="POST">
+																<div class="mb-3">
+						                                            <label for="username" class="form-label">할인 비율</label>
+						                                            <input required="required" type="number"  min="1" th:max="${max}" class="form-control" name="bonusRate" placeholder="고객에게 적용할 충전 혹은 할인 비율을 입력 해 주세요.">
+						                                            <input type="hidden" th:value="${parent}" name="parentUsername">
+						                                            <input type="hidden" th:value="buyer" name="code">
+						                                            <span># 1 ~ [[${max}]]의 값을 입력 해 주세요.</span>
+						                                        </div>
+																<div class="d-flex profile-wrapper">
+																	<div class="flex-shrink-0">
+																		<button class="btn btn-success" type="submit"><i
+																			class="ri-edit-box-line align-bottom"></i> 생성하기</button>
+																	</div>
+																</div>
+															</form>
+															<th:block th:if="${buyerLink}">
+																<div class="mb-3">
+						                                            <input type="text"
+						                                            th:value="${buyerLink}"
+						                                            id="buyerLink"
+						                                            class="form-control mt-3" 
+						                                            readonly="readonly" 
+						                                            placeholder="Link" >
+						                                           
+						                                        </div>
+																<div class="d-flex profile-wrapper">
+																	<div class="flex-shrink-0">
+																		<button class="btn btn-warning" onclick="copyUrl(1);"><i
+																			class="ri-edit-box-line align-bottom"></i> 복사하기</button>		
+																	</div>
+																</div>
+															</th:block>
+														</div>
+													</div>
+												</div>
+
+											</div>
+											<div class="col-xxl-6">
+
+												<div class="card">
+													<div class="card-body">
+														<h5 class="card-title mb-3">For Dealer</h5>
+														<div class="table-responsive">
+															<form action="/member/createLink" method="POST">
+																<div class="mb-3">
+						                                            <label for="username" class="form-label">보너스 포인트</label>
+						                                            <input required="required" type="number"  min="1" th:max="${max}" class="form-control" name="bonusRate" placeholder="딜러에게 적용할 보너스 비율을 입력 해 주세요.">
+						                                            <input type="hidden" th:value="${parent}" name="parentUsername">
+						                                            <input type="hidden" th:value="dealer" name="code">
+						                                            <span># 1 ~ [[${max}]]의 값을 입력 해 주세요.</span>
+						                                        </div>
+						
+						                                        <div class="d-flex profile-wrapper">
+																	<div class="flex-shrink-0">
+																		<button class="btn btn-success"><i
+																			class="ri-edit-box-line align-bottom"></i> 생성하기</button>
+																	</div>
+																</div>
+															</form>
+															<th:block th:if="${dealerLink}">
+																<div class="mb-3">
+						                                            <input type="text" 
+						                                            th:value="${dealerLink}"
+						                                            class="form-control mt-3" 
+						                                            readonly="readonly" 
+						                                            id="dealerLink"
+						                                            placeholder="Link" >
+						                                        </div>
+																<div class="d-flex profile-wrapper">
+																	<div class="flex-shrink-0">
+																		<button class="btn btn-warning" onclick="copyUrl(2);"><i
+																			class="ri-edit-box-line align-bottom"></i> 복사하기</button>		
+																	</div>
+																</div>
+															</th:block>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<th:block th:replace="fragments/common :: footerSrc"></th:block>
+	</div>
+
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+
+	<div id="preloader">
+		<div id="status">
+			<div class="spinner-border text-primary avatar-sm" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+		function copyUrl(sign){
+			if(sign === 1){
+				var url = document.getElementById("buyerLink").value;	
+			}else{
+				var url = document.getElementById("dealerLink").value;
+			}
+		   
+		   var textarea = document.createElement("textarea");
+		   document.body.appendChild(textarea);
+		   textarea.value = url;
+		   textarea.select();
+		   document.execCommand("copy");
+		   document.body.removeChild(textarea);
+		   alert("링크가 복사되었습니다. 필요하신 곳에 붙여넣기 하세요!")
+		}
+	</script>
+	<th:block th:replace="fragments/common :: scriptSrc"></th:block>
+</body>
+
+</html>
