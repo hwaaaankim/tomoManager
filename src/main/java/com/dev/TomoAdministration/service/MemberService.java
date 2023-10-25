@@ -29,9 +29,14 @@ public class MemberService{
 	public Member save(Member member) {
 		String encodedPassword = passwordEncoder().encode(member.getPassword());
 		member.setPassword(encodedPassword);
-		member.setMemberEnabled(true);
+		member.setMemberEnabled(false);
 		member.setMemberJoinDate(new Date());
-		member.setMemberRole("ROLE_MEMBER");
+		if(member.getMemberGrade() == 2) {
+			member.setMemberRole("ROLE_MEMBER");
+		}else if(member.getMemberGrade() == 3) {
+			member.setMemberRole("ROLE_SUBMEMBER");
+		}
+		
 		member.setMemberParentUsername(member.getMemberParentUsername());
 		member.setMemberGrade(member.getMemberGrade());
 		member.setMemberBonusRate(member.getMemberBonusRate());
@@ -42,6 +47,8 @@ public class MemberService{
 
 	}
 	
+	
+	
 	public Member insertAdmin(Member member) {
 		String encodedPassword = passwordEncoder().encode(member.getPassword());
 		member.setPassword(encodedPassword);
@@ -51,6 +58,7 @@ public class MemberService{
 		member.setMemberParentUsername("NONE");
 		member.setMemberBonusRate(100);
 		member.setMemberGrade(1);
+		
 		log.info("NEW ADMIN");
 		
 		return memberRepository.save(member);

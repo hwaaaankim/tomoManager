@@ -46,6 +46,7 @@ public class WebSecurityConfig {
 			"/",
 			"/member/**"
 	};
+	
     private final String[] adminsUrls = {
     		"/admin/**", 
     		};
@@ -68,7 +69,7 @@ public class WebSecurityConfig {
 				.disable()
 			.authorizeRequests()
 			.antMatchers(adminsUrls).hasAuthority("ROLE_ADMIN")
-			.antMatchers(memberUrls).hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER")
+			.antMatchers(memberUrls).hasAnyAuthority("ROLE_ADMIN", "ROLE_MEMBER", "ROLE_SUBMEMBER")
 			.antMatchers(visitorsUrls).permitAll()
 			.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()	
 			.anyRequest().authenticated()	

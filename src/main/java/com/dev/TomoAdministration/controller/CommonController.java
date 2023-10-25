@@ -17,9 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dev.TomoAdministration.constant.Aes256Util;
@@ -84,31 +84,28 @@ public class CommonController {
 		return "all/signin";
 	}
 	
-	@RequestMapping("/signup/{code}")
+	@RequestMapping("/signup")
 	public String signup(
-			@PathVariable(required = false) String code,
+			@RequestParam(required = false, defaultValue = "NONE") String parent,
+			@RequestParam(required = false, defaultValue = "2") Integer grade,
+			@RequestParam(required = false, defaultValue = "30") Integer rate,
+			
 			Aes256Util util,
 			Model model
 			) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, JsonMappingException, JsonProcessingException {
-		String json = util.AES_Decode(code);
-		ObjectMapper mapper = new ObjectMapper();
-		TokenInfo info = mapper.readValue(json, TokenInfo.class);
-		model.addAttribute("memberParentUsername", info.getParentUsername());
-		model.addAttribute("memberGrade", info.getGrade());
-		model.addAttribute("memberBonusRate", info.getBonusRate());
+		
+		if(parent.equals("NONE")) {
+			model.addAttribute("memberGrade", 2);
+			model.addAttribute("memberBonusRate", 30);
+			model.addAttribute("memberParentUsername", "snstomo");
+		}else {
+			model.addAttribute("memberParentUsername", parent);
+			model.addAttribute("memberGrade", grade);
+			model.addAttribute("memberBonusRate", rate);
+		}
+		
 		return "all/signup";
 	}
-	
-	@RequestMapping("/signup")
-	public String signup(
-			Model model
-			){
-		model.addAttribute("memberGrade", 2);
-		model.addAttribute("memberBonusRate", 30);
-		model.addAttribute("memberParentUsername", "snstomo");
-		return "all/signup";
-	}
-	
 	@PostMapping("/signupProcess")
 	public String signupProcess(Member member) {
 		memberService.save(member);

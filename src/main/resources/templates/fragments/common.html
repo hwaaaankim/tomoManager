@@ -1,6 +1,8 @@
 <!doctype html>
-<html xmlns:th = "http://www.thymeleaf.org"
- lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+<html 
+xmlns:th = "http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
 
 <head th:fragment="headSrc">
 
@@ -66,8 +68,8 @@
 								aria-expanded="false">
 								<span class="d-flex align-items-center"> <span
 									class="text-start ms-xl-2"> <span
-										class="d-none d-xl-inline-block ms-1 fw-semibold user-name-text">User Name</span> <span
-										class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">Grade</span>
+										class="d-none d-xl-inline-block ms-1 fw-semibold user-name-text" sec:authentication="principal.membername"></span> <span
+										class="d-none d-xl-block ms-1 fs-12 user-name-sub-text" sec:authentication="principal.membergrade">Grade</span>
 								</span>
 								</span>
 							</button>
@@ -91,16 +93,16 @@
 		<div class="app-menu navbar-menu">
 			<div class="navbar-brand-box">
 				<a href="/index" class="logo logo-dark"> <span
-					class="logo-sm"> <img src="images/logo-sm.png" alt=""
+					class="logo-sm"> <img src="https://teriwoo0519.cafe24.com/tomo/logo.png" alt=""
 						height="22">
-				</span> <span class="logo-lg"> <img src="images/logo-dark.png"
+				</span> <span class="logo-lg"> <img src="https://teriwoo0519.cafe24.com/tomo/logo.png"
 						alt="" height="17">
 				</span>
 				</a>
 				<a href="/index" class="logo logo-light"> <span
-					class="logo-sm"> <img src="images/logo-sm.png" alt=""
+					class="logo-sm"> <img src="https://teriwoo0519.cafe24.com/tomo/logo.png" alt=""
 						height="22">
-				</span> <span class="logo-lg"> <img src="images/logo-light.png"
+				</span> <span class="logo-lg"> <img src="https://teriwoo0519.cafe24.com/tomo/logo.png"
 						alt="" height="17">
 				</span>
 				</a>
@@ -117,7 +119,9 @@
 					<div id="two-column-menu"></div>
 					<ul class="navbar-nav" id="navbar-nav">
 						<li class="menu-title"><span data-key="t-menu">Menu</span></li>
-						<li class="nav-item"><a class="nav-link menu-link"
+						<li class="nav-item"
+							sec:authorize = "hasAnyRole('MEMBER', 'SUBMEMBER')"
+						><a class="nav-link menu-link"
 							href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
 							aria-expanded="false" aria-controls="sidebarDashboards"> <i
 								class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">My Menu</span>
@@ -125,16 +129,37 @@
 							<div class="collapse menu-dropdown" id="sidebarDashboards">
 								<ul class="nav nav-sm flex-column">
 									<li class="nav-item"><a href="/member/myInfo"
-										class="nav-link" data-key="t-analytics"> 내 정보 </a></li>
+										class="nav-link" data-key="t-analytics"> アカウント情報 </a></li>
 									<li class="nav-item"><a href="/member/resetPassword"
-										class="nav-link" data-key="t-crm"> 비밀번호 재 설정 </a></li>
+										class="nav-link" data-key="t-crm"> パスワードをリセット </a></li>
+									<li class="nav-item"><a href="/member/makeLink" class="nav-link"
+										data-key="t-ecommerce"> リンク作成 </a></li>
+								</ul>
+							</div>
+						</li>
+						
+						<li class="nav-item"
+						    sec:authorize = "hasRole('ADMIN')"
+						><a class="nav-link menu-link"
+							href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
+							aria-expanded="false" aria-controls="sidebarDashboards"> <i
+								class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">My Menu</span>
+						</a>
+							<div class="collapse menu-dropdown" id="sidebarDashboards">
+								<ul class="nav nav-sm flex-column">
+									<li class="nav-item"><a href="/member/myInfo"
+										class="nav-link" data-key="t-analytics">나의 정보 확인 </a></li>
+									<li class="nav-item"><a href="/member/resetPassword"
+										class="nav-link" data-key="t-crm"> 패스워드 리셋 </a></li>
 									<li class="nav-item"><a href="/member/makeLink" class="nav-link"
 										data-key="t-ecommerce"> 링크 생성 </a></li>
 								</ul>
 							</div>
 						</li>
 
-						<li class="nav-item"><a class="nav-link menu-link"
+						<li
+						 sec:authorize = "hasAnyRole('MEMBER', 'SUBMEMBER')"
+						 class="nav-item"><a class="nav-link menu-link"
 							href="#sidebarAuth" data-bs-toggle="collapse" role="button"
 							aria-expanded="false" aria-controls="sidebarAuth"> <i
 								class="ri-account-circle-line"></i> <span
@@ -142,12 +167,36 @@
 						</a>
 							<div class="collapse menu-dropdown" id="sidebarAuth">
 								<ul class="nav nav-sm flex-column">
-									<li class="nav-item"><a href="dashboard-analytics.html"
-										class="nav-link" data-key="t-analytics"> 딜러 관리 </a></li>
-									<li class="nav-item"><a href="dashboard-analytics.html"
-										class="nav-link" data-key="t-analytics"> 서브 딜러 관리 </a></li>
-									<li class="nav-item"><a href="dashboard-crm.html"
-										class="nav-link" data-key="t-crm"> 바이어 관리 </a></li>
+									<li
+									 sec:authorize = "hasRole('MEMBER')"
+									 class="nav-item"><a href="#"
+										class="nav-link" data-key="t-analytics"> 2次販売者管理 </a></li>
+									<li
+									 sec:authorize = "hasRole('ADMIN')"
+									 class="nav-item"><a href="/member/subMemberRegistrationCheck"
+										class="nav-link" data-key="t-analytics"> サブディーラー申請管理 </a></li>	
+									<li class="nav-item"><a href="#"
+										class="nav-link" data-key="t-crm"> 一般顧客管理 </a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li
+						 sec:authorize = "hasRole('ADMIN')"
+						 class="nav-item"><a class="nav-link menu-link"
+							href="#sidebarAuth" data-bs-toggle="collapse" role="button"
+							aria-expanded="false" aria-controls="sidebarAuth"> <i
+								class="ri-account-circle-line"></i> <span
+								data-key="t-authentication">Authentication</span>
+						</a>
+							<div class="collapse menu-dropdown" id="sidebarAuth">
+								<ul class="nav nav-sm flex-column">
+									<li class="nav-item"><a href="/admin/memberRegistrationCheck"
+										class="nav-link" data-key="t-analytics"> 회원 가입 관리</a></li>
+									<li class="nav-item"><a href="#"
+										class="nav-link" data-key="t-analytics"> 딜러 관리</a></li>
+									<li class="nav-item"><a href="#"
+										class="nav-link" data-key="t-crm"> 고객 관리 </a></li>
 								</ul>
 							</div>
 						</li>
@@ -159,8 +208,8 @@
 						</a>
 							<div class="collapse menu-dropdown" id="sidebarPages">
 								<ul class="nav nav-sm flex-column">
-									<li class="nav-item"><a href="dashboard-analytics.html"
-										class="nav-link" data-key="t-analytics"> 실적 정산 </a></li>
+									<li class="nav-item"><a href="#"
+										class="nav-link" data-key="t-analytics"> 精算 </a></li>
 								</ul>
 							</div>
 						</li>

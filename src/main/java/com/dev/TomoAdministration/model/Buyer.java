@@ -45,4 +45,7 @@ public class Buyer {
 	
 	@Column(name="BUYER_MEMBER_ID")
 	private Long buyerMemberId;
+	
+	@Column(name="BUYER_SIGN")
+	private Boolean buyerSign;
 }

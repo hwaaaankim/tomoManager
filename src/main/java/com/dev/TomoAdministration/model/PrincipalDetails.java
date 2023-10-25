@@ -30,7 +30,22 @@ public class PrincipalDetails implements UserDetails {
         auth.add(new SimpleGrantedAuthority(member.getMemberRole()));
         return auth;
 	}
-
+	
+	public String getMembergrade() {
+		
+		if(this.member.getMemberGrade() == 2 || this.member.getMemberGrade() == 3) {
+			return "MANAGER";
+		}else {
+			return "ADMINISTRATION";
+		}
+		
+	}
+	
+	public String getMembername() {
+		
+		return this.member.getMemberName();
+	}
+	
     @Override
     public String getUsername() {
         return this.member.getUsername();

@@ -25,9 +25,9 @@
                     <div class="col-lg-12">
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
                             <div>
-                               <!--  <a href="index.html" class="d-inline-block auth-logo">
-                                    <img src="assets/images/logo-light.png" alt="" height="20">
-                                </a> -->
+                                <a href="/index" class="d-inline-block auth-logo">
+                                    <img src="https://teriwoo0519.cafe24.com/tomo/logo.png" alt="" height="50">
+                                </a>
                             </div>
                             <p class="mt-3 fs-15 fw-semibold">SNSTOMO Management Center</p>
                         </div>
@@ -40,29 +40,29 @@
 
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
-                                    <h5 class="text-primary">SNSTOMO 회원가입</h5>
+                                    <h5 class="text-primary">SNSTOMO 会員登録</h5>
                                 </div>
                                 
                                 <div class="p-2 mt-4">
                                     <form class="row" action="/signupProcess" method="POST">
 										<div class="col-md-6 col-lg-6 col-xl-6">
 											<div class="mb-3">
-	                                            <label class="form-label">ID <span class="text-danger">*</span></label>
+	                                            <label class="form-label">会員ID<span class="text-danger">*</span></label>
 	                                            <input 
 	                                            type="text" 
 	                                            class="form-control" 
 	                                            name="username" 
-	                                            placeholder="사용할 ID를 입력 해 주세요." 
+	                                            placeholder="ご希望のIDを入力してください。" 
 	                                            required>
-	                                            <p class="info-message"># SNSTOMO Management Center에서 사용할 ID를 입력 해 주세요.</p>
+	                                            <p class="info-message"># SNSTOMO Management Centerで使用希望のIDを入力してください。</p>
 	                                        </div>
 	                                        <div class="mb-3">
-	                                            <label for="name" class="form-label">NAME <span class="text-danger">*</span></label>
+	                                            <label for="name" class="form-label">お名前 <span class="text-danger">*</span></label>
 	                                            <input 
 	                                            type="text" 
 	                                            class="form-control" 
 	                                            name="memberName" 
-	                                            placeholder="성함 또는 업체명을 입력 해 주세요." 
+	                                            placeholder="お名前または会社名を入力してください" 
 	                                            required>
 	                                        </div>
 	                                        <div class="mb-3">
@@ -71,61 +71,61 @@
 	                                            type="email" 
 	                                            class="form-control" 
 	                                            name="memberEmail" 
-	                                            placeholder="E-MAIL을 입력 해 주세요." 
+	                                            placeholder="E-MAILを入力してください" 
 	                                            required>
-	                                            <p class="info-message"># 고객 구매 또는 SUB 딜러 가입 등 모든 소식은 E-Mail을 통해 전달됩니다.</p>
-	                                            <p class="info-message"># 원활한 소통을 위해 정확한 E-Mail을 입력 해 주세요.</p>
+	                                            <p class="info-message"># 顧客の購買、SUBディーラー登録などすべての情報はE-MAILを通じてお伝えします。</p>
+	                                            <p class="info-message"># 正確なE-MAILアドレスをご記入ください。</p>
 	                                        </div>
 	                                        <div class="mb-3">
-	                                            <label class="form-label">Password <span class="text-danger">*</span></label>
+	                                            <label class="form-label">パスワード<span class="text-danger">*</span></label>
 	                                            <div class="position-relative">
 	                                                <input 
 	                                                type="password" 
 	                                                class="form-control pe-5" 
 	                                                onpaste="return false" 
-	                                                placeholder="비밀번호를 입력 해 주세요." 
+	                                                placeholder="パスワードを入力してください" 
 	                                                name="password"
 	                                                required>
 	                                            </div>
 	                                        </div>
 	                                        <div class="mb-3">
-	                                            <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+	                                            <label class="form-label">電話番号<span class="text-danger">*</span></label>
 	                                            <div class="position-relative">
 	                                                <input 
 	                                                type="text" 
 	                                                class="form-control pe-5" 
-	                                                placeholder="휴대폰 번호를 입력 해 주세요" 
+	                                                placeholder="携帯電話番号を入力してください" 
 	                                                name="memberPhoneNumber"
 	                                                required>
-	                                                <p class="info-message"># 연락처를 정확하게 입력 해 주세요.</p>
+	                                                <p class="info-message"># 正確なご連絡先をご記入ください。</p>
 	                                            </div>
 	                                        </div>
 	                                        
 										</div>
 										<div class="col-md-6 col-lg-6 col-xl-6">
 											<div class="mb-3">
-	                                            <label class="form-label">Account Number <span class="text-danger">*</span></label>
+	                                            <label class="form-label">口座番号 <span class="text-danger">*</span></label>
 	                                            <div class="position-relative">
 	                                                <input 
 	                                                type="text" 
 	                                                class="form-control pe-5" 
 	                                                name="memberAccountNumber"
-	                                                placeholder="계좌번호를 입력 해 주세요."
+	                                                placeholder="口座番号を入力してください"
 	                                                required>
-	                                                <p class="info-message"># 수당 정산을 위한 계좌번호를 정확하게 입력 해 주세요.</p>
+	                                                <p class="info-message"># 手当精算のための口座番号を正確にご記入ください</p>
 	                                            </div>
 	                                        </div>
 	                                        <div class="mb-3">
-	                                            <label class="form-label">Parent User <span class="text-danger">*</span></label>
+	                                            <label class="form-label">親ユーザー<span class="text-danger">*</span></label>
 	                                            <div class="position-relative">
 	                                                <input 
 	                                                type="text" 
 	                                                class="form-control pe-5" 
 	                                                name="memberParentUsername"
 	                                                th:value="${memberParentUsername}">
-	                                                <p class="info-message"># 상위 유저가 있는 경우 해당 상위 유저의 ID를 입력 해 주세요.</p>
-	                                                <p class="info-message"># 상위 유저가 SNSTOMO인 경우 snstomo 를 입력 해 주세요.</p>
-	                                                <p class="info-message"># 제공받은 URL을 통해 접속시 자동으로 입력 됩니다.</p>
+	                                                <p class="info-message"># 上位のユーザーがいる場合該当するIDをご記入ください。</p>
+	                                                <p class="info-message"># 上位ユーザーがSNS TOMOである場合SNSTOMOと入力してください</p>
+	                                                <p class="info-message"># 提供されたURLを通じて接続していただくと自動入力されます。</p>
 	                                                <input type="hidden" th:value="${memberGrade}" name="memberGrade">
 	                                                <input type="hidden" th:value="${memberBonusRate}" name="memberBonusRate">
 	                                            </div>
@@ -137,9 +137,9 @@
 	                                                type="text" 
 	                                                class="form-control pe-5" 
 	                                                name="memberTomoUsername"
-	                                                placeholder="Enter SNS TOMO ID" >
-	                                                <p class="info-message"># SNSTOMO에서 상품 구매를 하실 경우에는 ID입력이 필요합니다.</p>
-	                                                <p class="info-message"># ID입력을 통해 다양한 혜택을 받을 수 있습니다.</p>
+	                                                placeholder="SNS TOMOのIDを入力" >
+	                                                <p class="info-message"># SNS TOMOでサービスを購入される場合ID入力が必要になります。</p>
+	                                                <p class="info-message"># IDを入力するとお得な情報がございます。</p>
 	                                            </div>
 	                                        </div>
 	                                        <div class="mb-3">
@@ -149,20 +149,20 @@
 	                                                type="text" 
 	                                                class="form-control pe-5" 
 	                                                name="memberTomoEmail"
-	                                                placeholder="Enter SNS TOMO EMAIL" >
-	                                                <p class="info-message"># SNSTOMO에서 상품 구매를 하실 경우에는 ID입력이 필요합니다.</p>
-	                                                <p class="info-message"># ID입력을 통해 다양한 혜택을 받을 수 있습니다.</p>
+	                                                placeholder="SNS TOMOのEmailを入力" >
+	                                                <p class="info-message"># SNS TOMOでサービスを購入される場合ID入力が必要になります。</p>
+	                                                <p class="info-message"># IDを入力するとお得な情報がございます。</p>
 	                                            </div>
 	                                        </div>
 										</div>
                                         <div class="mb-4">
-                                            <p class="mb-0 fs-13 text-muted fst-italic">본 사이트의 회원가입 진행시  SNSTOMO의 <a href="#" class="text-primary text-decoration-underline fst-normal fw-semibold">Terms of Use</a>
-                                          		에 동의 하는 것으로 간주 됩니다.</p>
+                                            <p class="mb-0 fs-13 text-muted fst-italic">会員登録時SNSTOMOの <a href="#" class="text-primary text-decoration-underline fst-normal fw-semibold">利用規約</a>
+                                          		に同意することとみなします。</p>
                                         </div>
 						
 
                                         <div class="mt-4">
-                                            <button class="btn btn-success w-100" type="submit">회원가입</button>
+                                            <button class="btn btn-success w-100" type="submit">会員登録</button>
                                         </div>
 									
                                     </form>
@@ -172,7 +172,7 @@
                         </div>
 
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Already have an account ? <a href="/signin" class="fw-bold text-primary text-decoration-underline"> Signin </a> </p>
+                            <p class="mb-0">既にアカウントをお持ちである場合は？ <a href="/signin" class="fw-bold text-primary text-decoration-underline"> ログイン </a> </p>
                         </div>
 
                     </div>

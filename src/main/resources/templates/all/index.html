@@ -1,7 +1,10 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"
-	data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg"
-	data-sidebar-image="none" data-preloader="disable">
+<html 
+xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+lang="en"
+data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg"
+data-sidebar-image="none" data-preloader="disable">
 
 <head th:replace="fragments/common :: headSrc">
 
@@ -29,109 +32,109 @@
 										<div
 											class="d-flex align-items-lg-center flex-lg-row flex-column">
 											<div class="flex-grow-1">
-												<h4 class="fs-16 mb-1">환영합니다.</h4>
-												<p class="text-muted mb-0">간단한 판매 혹은 구매에 대한 정보를 확인할 수 있습니다.</p>
+												<h4 class="fs-16 mb-1">SNSTOMOのアフィリエイトシステムにご参加していただき誠にありがとうございます。</h4>
+												<p class="text-muted mb-0">自身の活動によって発生した売上の概要を確認できるページです。</p>
 											</div>
 										</div>
 									</div>
 								</div>
 
 								<div class="row">
-									<div class="col-xl-3 col-md-6">
+									<div class="col-xl-6 col-md-6" sec:authorize="hasRole('ADMIN')">
 										<div class="card card-animate bg-primary">
 											<div class="card-body">
 												<div class="d-flex align-items-center">
 													<div class="flex-grow-1 overflow-hidden">
-														<p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">총 매출</p>
-														<p class="info-message"># 나의 모든 매출을 의미 합니다.</p>
-														<p class="info-message"># 관리자만 확인할 수 있습니다.</p>
+														<p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">직접 매출</p>
+														<p class="info-message"># 내가 직접 모집한 고객들의 매출 총 합계를 확인할 수 있습니다.</p>
+														<p class="info-message"># 최종 관리자만 확인할 수 있습니다.</p>
+														<p class="info-message"># 전체 기간에 따른 매출만 확인할 수 있습니다.</p>
 													</div>
 												</div>
 												<div
 													class="d-flex align-items-end justify-content-between mt-4">
 													<div>
 														<h4 class="fs-22 fw-bold ff-secondary text-white mb-4">
-															$<span class="counter-value" data-target="559.25">0</span>k
+															<span class="counter-value" data-target="0"></span>&#165;
 														</h4>
-														<a href="" class="text-decoration-underline text-white-50">View
-															net earnings</a>
-														<p class="info-message"># 클릭시 총 매출 정산 페이지로 이동합니다..</p>	
+														<a href="" class="text-decoration-underline text-white-50">자세히보기</a>
+														<p class="info-message"># 클릭시 총 매출 정산 페이지로 이동합니다.</p>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 
-									<div class="col-xl-3 col-md-6">
+									<div class="col-xl-6 col-md-6" sec:authorize="hasRole('ADMIN')">
 										<div class="card card-animate bg-secondary">
 											<div class="card-body">
 												<div class="d-flex align-items-center">
 													<div class="flex-grow-1 overflow-hidden">
-														<p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">총 매출</p>
-														<p class="info-message"># 나의 모든 매출을 의미 합니다.</p>
-														<p class="info-message"># 관리자만 확인할 수 있습니다.</p>
+														<p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">딜러 총 매출</p>
+														<p class="info-message"># 딜러에 의한 모든 매출을 확인할 수 있습니다.</p>
+														<p class="info-message"># 최고 관리자만 확인할 수 있습니다.</p>
+														<p class="info-message"># 전체 기간에 따른 매출만 확인할 수 있습니다.</p>
 													</div>
 												</div>
 												<div
 													class="d-flex align-items-end justify-content-between mt-4">
 													<div>
 														<h4 class="fs-22 fw-bold ff-secondary text-white mb-4">
-															$<span class="counter-value" data-target="559.25">0</span>k
+															<span class="counter-value" data-target="0"></span>&#165;
 														</h4>
-														<a href="" class="text-decoration-underline text-white-50">View
-															net earnings</a>
-														<p class="info-message"># 클릭시 총 매출 정산 페이지로 이동합니다..</p>	
+														<a href="" class="text-decoration-underline text-white-50">자세히보기</a>
+														<p class="info-message"># 클릭시 총 매출 정산 페이지로 이동합니다.</p>	
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 
-									<div class="col-xl-3 col-md-6">
+									<div class="col-xl-6 col-md-6" sec:authorize="hasRole('MEMBER')">
 										<!-- card -->
 										<div class="card card-animate bg-success">
 											<div class="card-body">
 												<div class="d-flex align-items-center">
 													<div class="flex-grow-1 overflow-hidden">
-														<p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">총 매출</p>
-														<p class="info-message"># 나의 모든 매출을 의미 합니다.</p>
-														<p class="info-message"># 관리자만 확인할 수 있습니다.</p>
+														<p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">誘致売上合計</p>
+														<p class="info-message"># あなたがアフィリエイトで誘致した販売金額の総計を意味します。（２次販売者、一般顧客を含む）</p>
+														<p class="info-message"># 利用者それぞれ手数料率を調整でき、同じ販売金額でも販売手数料が異なる場合があります。</p>
+														<p class="info-message"># フリーランスとして活動している期間全体の売上を意味します。</p>
 													</div>
 												</div>
 												<div
 													class="d-flex align-items-end justify-content-between mt-4">
 													<div>
 														<h4 class="fs-22 fw-bold ff-secondary text-white mb-4">
-															$<span class="counter-value" data-target="559.25">0</span>k
+															<span class="counter-value" data-target="0"></span>&#165;
 														</h4>
-														<a href="" class="text-decoration-underline text-white-50">View
-															net earnings</a>
-														<p class="info-message"># 클릭시 총 매출 정산 페이지로 이동합니다..</p>	
+														<a href="" class="text-decoration-underline text-white-50">詳細を見る</a>
+														<p class="info-message"># クリックすると精算ページに移動します。</p>	
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 
-									<div class="col-xl-3 col-md-6">
+									<div class="col-xl-6 col-md-6" sec:authorize="hasAnyRole('MEMBER', 'SUBMEMBER')">
 										<div class="card card-animate bg-info">
 											<div class="card-body">
 												<div class="d-flex align-items-center">
 													<div class="flex-grow-1 overflow-hidden">
-														<p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">총 매출</p>
-														<p class="info-message"># 나의 모든 매출을 의미 합니다.</p>
-														<p class="info-message"># 관리자만 확인할 수 있습니다.</p>
+														<p class="text-uppercase fw-bold text-white-50 text-truncate mb-0">直接売上合計</p>
+														<p class="info-message"># あなたがアフィリエイトで誘致した販売金額の総計を意味します。（一般顧客のみ）</p>
+														<p class="info-message"># 利用者それぞれ手数料率を調整でき、同じ販売金額でも販売手数料が異なる場合があります。</p>
+														<p class="info-message"># フリーランスとして活動している期間全体の売上を意味します。</p>
 													</div>
 												</div>
 												<div
 													class="d-flex align-items-end justify-content-between mt-4">
 													<div>
 														<h4 class="fs-22 fw-bold ff-secondary text-white mb-4">
-															$<span class="counter-value" data-target="559.25">0</span>k
+															<span class="counter-value" data-target="0"></span>&#165;
 														</h4>
-														<a href="" class="text-decoration-underline text-white-50">View
-															net earnings</a>
-														<p class="info-message"># 클릭시 총 매출 정산 페이지로 이동합니다..</p>	
+														<a href="" class="text-decoration-underline text-white-50">詳細を見る</a>
+														<p class="info-message"># クリックすると精算ページに移動します。</p>	
 													</div>
 												</div>
 											</div>
@@ -144,9 +147,9 @@
 									<div class="col-xl-6">
 										<div class="card">
 											<div class="card-header align-items-center">
-												<h4 class="card-title mb-3 flex-grow-1 ">딜러 정산 TOP 5</h4>
-												<p class="info-message"># 내가 1차 딜러인 경우에 확인할 수 있는 메뉴 입니다.</p>
-												<p class="info-message"># 나에게 속한 딜러 중 매출이 가장 큰 5명의 딜러를 확인할 수 있습니다.</p>
+												<h4 class="card-title mb-3 flex-grow-1 ">誘致フリーランス売上TOP5</h4>
+												<p class="info-message"># 一次販売者の場合、確認できるメニューです。</p>
+												<p class="info-message"># あなたに属している2次販売者の中、売上が大きい順番で5人の2次販売者が確認できます。</p>
 											</div>
 
 											<div class="card-body">
@@ -154,7 +157,7 @@
 													<table
 														class="table table-hover table-centered align-middle table-nowrap mb-0">
 														<tbody>
-															<tr>
+															<!-- <tr>
 																<td>
 																	<div class="d-flex align-items-between">
 																		<div class="flex-grow-1">
@@ -235,7 +238,7 @@
 																	</div>
 																</td>
 																<td><span class="text-muted">$11260</span></td>
-															</tr>
+															</tr> -->
 														</tbody>
 													</table>
 												</div>
@@ -245,7 +248,7 @@
 													<div class="col-sm">
 														<div class="text-muted">
 															<a href="" class="text-decoration-underline">
-															모든 딜러 판매내역 확인하기 =></a>
+															全ての2次販売者の履歴を見る。 =></a>
 														</div>
 													</div>
 												</div>
@@ -257,9 +260,9 @@
 									<div class="col-xl-6">
 										<div class="card card-height-100">
 											<div class="card-header align-items-center">
-												<h4 class="card-title mb-3 flex-grow-1 ">바이어 정산 TOP 5</h4>
-												<p class="info-message"># 내게 속한 고객 중 가장 많은 구매를 진행한 5명의 유저를 확인할 수 있습니다.</p>
-												<p class="info-message"># 하단의 모든 내역 확인하기를 클릭하여 모든 구매 내역을 확인할 수 있습니다.</p>
+												<h4 class="card-title mb-3 flex-grow-1 ">直接売上の顧客TOP5</h4>
+												<p class="info-message"># あなたがアフィリエイトで誘致した（一般顧客のみ）購入者の中で売上が大きい順番で5人の履歴が確認できます。</p>
+												<p class="info-message"># 下の「すべての履歴を確認する」ところをクリックすると、すべての購入履歴を確認できます。</p>
 											</div>
 
 											<div class="card-body">
@@ -267,7 +270,7 @@
 													<table
 														class="table table-centered table-hover align-middle table-nowrap mb-0">
 														<tbody>
-															<tr>
+															<!-- <tr>
 																<td>
 																	<div class="d-flex align-items-between">
 																		<div class="flex-grow-1">
@@ -340,7 +343,7 @@
 																	</div>
 																</td>
 																<td><span class="text-muted">$11260</span></td>
-															</tr>
+															</tr> -->
 														</tbody>
 													</table>
 												</div>
@@ -350,7 +353,7 @@
 													<div class="col-sm">
 														<div class="text-muted">
 															<a href="" class="text-decoration-underline">
-															모든 바이어 구매내역 확인하기 =></a>
+															すべての購入者の購入履歴を確認する =></a>
 														</div>
 													</div>
 												</div>
@@ -367,8 +370,7 @@
 								<div class="card h-100 rounded-0">
 									<div class="card-body p-0">
 										<div class="p-3">
-											<h6 class="text-muted mb-0 text-uppercase fw-bold fs-13">Recent
-												Activity</h6>
+											<h6 class="text-muted mb-0 text-uppercase fw-bold fs-13">最近の活動内容</h6>
 										</div>
 										<div data-simplebar style="max-height: 410px;"
 											class="p-3 pt-0">
@@ -381,31 +383,7 @@
 														</div>
 													</div>
 													<div class="flex-grow-1 ms-3">
-														<h6 class="mb-1 lh-base">구매 발생</h6>
-														<small class="mb-0 text-muted">2023.01.01</small>
-													</div>
-												</div>
-												<div class="acitivity-item d-flex">
-													<div class="flex-shrink-0 avatar-xs acitivity-avatar">
-														<div
-															class="avatar-title bg-success-subtle text-success rounded-circle">
-															<i class="ri-shopping-cart-2-line"></i>
-														</div>
-													</div>
-													<div class="flex-grow-1 ms-3">
-														<h6 class="mb-1 lh-base">구매 발생</h6>
-														<small class="mb-0 text-muted">2023.01.01</small>
-													</div>
-												</div>
-												<div class="acitivity-item d-flex">
-													<div class="flex-shrink-0 avatar-xs acitivity-avatar">
-														<div
-															class="avatar-title bg-success-subtle text-success rounded-circle">
-															<i class="ri-shopping-cart-2-line"></i>
-														</div>
-													</div>
-													<div class="flex-grow-1 ms-3">
-														<h6 class="mb-1 lh-base">구매 발생</h6>
+														<h6 class="mb-1 lh-base">売上発生</h6>
 														<small class="mb-0 text-muted">2023.01.01</small>
 													</div>
 												</div>
@@ -419,40 +397,8 @@
 													</div>
 													<div class="flex-grow-1 ms-3">
 														<h6 class="mb-1 lh-base">
-															 <a href="apps-ecommerce-seller-details.html"
-																class="link-secondary">회원가입 발생</a>
-														</h6>
-														<small class="mb-0 text-muted">2023.01.01</small>
-													</div>
-												</div>
-												<div class="acitivity-item py-3 d-flex">
-													<div class="flex-shrink-0">
-														<div class="avatar-xs acitivity-avatar">
-															<div class="avatar-title rounded-circle bg-secondary">
-																<i class="mdi mdi-sale fs-14"></i>
-															</div>
-														</div>
-													</div>
-													<div class="flex-grow-1 ms-3">
-														<h6 class="mb-1 lh-base">
-															 <a href="apps-ecommerce-seller-details.html"
-																class="link-secondary">회원가입 발생</a>
-														</h6>
-														<small class="mb-0 text-muted">2023.01.01</small>
-													</div>
-												</div>
-												<div class="acitivity-item py-3 d-flex">
-													<div class="flex-shrink-0">
-														<div class="avatar-xs acitivity-avatar">
-															<div class="avatar-title rounded-circle bg-secondary">
-																<i class="mdi mdi-sale fs-14"></i>
-															</div>
-														</div>
-													</div>
-													<div class="flex-grow-1 ms-3">
-														<h6 class="mb-1 lh-base">
-															 <a href="apps-ecommerce-seller-details.html"
-																class="link-secondary">회원가입 발생</a>
+															 <a href="#"
+																class="link-secondary">売上発生</a>
 														</h6>
 														<small class="mb-0 text-muted">2023.01.01</small>
 													</div>
@@ -467,14 +413,13 @@
 											<div class="card-body">
 												<img src="images/giftbox.png" alt="">
 												<div class="mt-4">
-													<h5>Invite New Seller</h5>
-													<p class="text-muted lh-base">Refer a new seller to us
-														and earn $100 per refer.</p>
+													<h5>あなたの代わりに広報する人を招待してみましょう。</h5>
+													<p class="text-muted lh-base">あなたが誘致した人から発生した売上額に対して報酬を支給いたします。</p>
 													<button type="button"
 														class="btn btn-primary btn-label rounded-pill">
 														<i
 															class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i>
-														Invite Now
+														今すぐ周りの人を招待してみましょう。
 													</button>
 												</div>
 											</div>

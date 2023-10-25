@@ -1,5 +1,7 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"
+<html 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:th="http://www.thymeleaf.org" lang="en"
 	data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg"
 	data-sidebar-image="none" data-preloader="disable">
 
@@ -29,13 +31,13 @@
 						<div class="row g-4">
 							<div class="col">
 								<div class="p-2">
-									<h3 class="text-white mb-1">USER Name</h3>
-									<p class="text-white text-opacity-75">Grade</p>
+									<h3 class="text-white mb-1" sec:authentication="principal.membername">USER Name</h3>
+									<p class="text-white text-opacity-75"sec:authentication="principal.membergrade">Grade</p>
 									<div class="hstack text-white-50 gap-1">
 										<div class="me-2">
 											<i
-												class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Dealer
-											/ Sub Dealer
+												class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Manager
+											
 										</div>
 									</div>
 								</div>
@@ -55,20 +57,20 @@
 
 												<div class="card">
 													<div class="card-body">
-														<h5 class="card-title mb-3">For Buyer</h5>
+														<h5 class="card-title mb-3">バイヤー</h5>
 														<div class="table-responsive">
 															<form action="/member/createLink" method="POST">
 																<div class="mb-3">
-						                                            <label for="username" class="form-label">할인 비율</label>
-						                                            <input required="required" type="number"  min="1" th:max="${max}" class="form-control" name="bonusRate" placeholder="고객에게 적용할 충전 혹은 할인 비율을 입력 해 주세요.">
+						                                            <label for="username" class="form-label">割引率</label>
+						                                            <input required="required" type="number"  min="1" th:max="${max}" class="form-control" name="bonusRate" placeholder="バイヤーに適用したいチャージまたは割引率をご記入ください。">
 						                                            <input type="hidden" th:value="${parent}" name="parentUsername">
 						                                            <input type="hidden" th:value="buyer" name="code">
-						                                            <span># 1 ~ [[${max}]]의 값을 입력 해 주세요.</span>
+						                                            <span># 1から [[${max}]]の間の数字をご記入ください。</span>
 						                                        </div>
 																<div class="d-flex profile-wrapper">
 																	<div class="flex-shrink-0">
 																		<button class="btn btn-success" type="submit"><i
-																			class="ri-edit-box-line align-bottom"></i> 생성하기</button>
+																			class="ri-edit-box-line align-bottom"></i> 登録する</button>
 																	</div>
 																</div>
 															</form>
@@ -85,7 +87,7 @@
 																<div class="d-flex profile-wrapper">
 																	<div class="flex-shrink-0">
 																		<button class="btn btn-warning" onclick="copyUrl(1);"><i
-																			class="ri-edit-box-line align-bottom"></i> 복사하기</button>		
+																			class="ri-edit-box-line align-bottom"></i> コピーする</button>		
 																	</div>
 																</div>
 															</th:block>
@@ -98,21 +100,21 @@
 
 												<div class="card">
 													<div class="card-body">
-														<h5 class="card-title mb-3">For Dealer</h5>
+														<h5 class="card-title mb-3">販売者</h5>
 														<div class="table-responsive">
 															<form action="/member/createLink" method="POST">
 																<div class="mb-3">
-						                                            <label for="username" class="form-label">보너스 포인트</label>
-						                                            <input required="required" type="number"  min="1" th:max="${max}" class="form-control" name="bonusRate" placeholder="딜러에게 적용할 보너스 비율을 입력 해 주세요.">
+						                                            <label for="username" class="form-label">ボーナスポイント比率</label>
+						                                            <input required="required" type="number"  min="1" th:max="${max}" class="form-control" name="bonusRate" placeholder="販売者に適用するボーナスポイントの比率をご記入ください。">
 						                                            <input type="hidden" th:value="${parent}" name="parentUsername">
 						                                            <input type="hidden" th:value="dealer" name="code">
-						                                            <span># 1 ~ [[${max}]]의 값을 입력 해 주세요.</span>
+						                                            <span># 1から [[${max}]]の間の数字をご記入ください。</span>
 						                                        </div>
 						
 						                                        <div class="d-flex profile-wrapper">
 																	<div class="flex-shrink-0">
 																		<button class="btn btn-success"><i
-																			class="ri-edit-box-line align-bottom"></i> 생성하기</button>
+																			class="ri-edit-box-line align-bottom"></i> 登録する</button>
 																	</div>
 																</div>
 															</form>
@@ -128,7 +130,7 @@
 																<div class="d-flex profile-wrapper">
 																	<div class="flex-shrink-0">
 																		<button class="btn btn-warning" onclick="copyUrl(2);"><i
-																			class="ri-edit-box-line align-bottom"></i> 복사하기</button>		
+																			class="ri-edit-box-line align-bottom"></i> コピーする</button>		
 																	</div>
 																</div>
 															</th:block>
@@ -180,7 +182,7 @@
 		   textarea.select();
 		   document.execCommand("copy");
 		   document.body.removeChild(textarea);
-		   alert("링크가 복사되었습니다. 필요하신 곳에 붙여넣기 하세요!")
+		   alert("リンクがコピーされました。 必要な所にペーストしてください。");
 		}
 	</script>
 	<th:block th:replace="fragments/common :: scriptSrc"></th:block>

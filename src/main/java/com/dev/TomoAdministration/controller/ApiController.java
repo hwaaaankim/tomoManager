@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -24,6 +23,8 @@ import com.dev.TomoAdministration.model.Buyer;
 import com.dev.TomoAdministration.model.Member;
 import com.dev.TomoAdministration.repository.BuyerRepository;
 import com.dev.TomoAdministration.repository.MemberRepository;
+import com.dev.TomoAdministration.service.BuyerLogService;
+import com.dev.TomoAdministration.service.BuyerService;
 import com.dev.TomoAdministration.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -42,6 +43,12 @@ public class ApiController {
 	
 	@Autowired
 	BuyerRepository buyerRepository;
+	
+	@Autowired
+	BuyerService buyerService;
+	
+	@Autowired
+	BuyerLogService buyerLogService;
 	
 	@RequestMapping("/jwtTest")
 	@ResponseBody
@@ -69,6 +76,17 @@ public class ApiController {
 		return deco;
 	}
 	
+	@PostMapping(value="/buyerLogging")
+	public String buyerLogging(
+			@RequestParam(name = "link", required = false) String link,
+			@RequestParam(name = "price", required = false) String price,
+			@RequestParam(name = "username", required = false) String username
+			) {
+		
+		buyerLogService.buyerLogging(link, username, price);
+		return "success";
+	}
+	
 	@RequestMapping(value = "/buyerRegistration")
 	public String buyerRegistration(
 			@RequestParam(name = "parent", required=false) String parent,
@@ -81,20 +99,17 @@ public class ApiController {
 			Buyer buyer
 			) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, JsonMappingException, JsonProcessingException {
 		
-		System.out.println(parent);
-		System.out.println(rate);
-		System.out.println(grade);
-		System.out.println(username);
-		System.out.println(email);
-//		String json = util.AES_Decode(code);
-//		ObjectMapper mapper = new ObjectMapper();
-//		TokenInfo info = mapper.readValue(json, TokenInfo.class);
-		buyer.setBuyerUsername(username);
-		buyer.setBuyerEmail(email);
-		buyer.setBuyerBonusRate(rate);
-		buyer.setBuyerJoinDate(new Date());
-		buyer.setBuyerMemberId(memberRepository.findByUsername(parent).get().getMemberId());
-		buyerRepository.save(buyer);
+		Boolean sign = true;
+		if(parent.equals("snstomo")) {
+			sign = false;
+		}
+		buyerService.buyerRegistration(
+				memberRepository.findByUsername(parent).get().getMemberId(), 
+				username, 
+				email, 
+				rate, 
+				sign);
+		
 		return buyer.toString();
 	}
 	
