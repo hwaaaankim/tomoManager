@@ -62,10 +62,10 @@ xmlns:th="http://www.thymeleaf.org" lang="en"
 															<form action="/member/createLink" method="POST">
 																<div class="mb-3">
 						                                            <label for="username" class="form-label">割引率</label>
-						                                            <input required="required" type="number"  min="1" th:max="${max}" class="form-control" name="bonusRate" placeholder="バイヤーに適用したいチャージまたは割引率をご記入ください。">
+						                                            <input required="required" type="number"  min="0" th:max="${max}" class="form-control" name="bonusRate" placeholder="バイヤーに適用したいチャージまたは割引率をご記入ください。">
 						                                            <input type="hidden" th:value="${parent}" name="parentUsername">
 						                                            <input type="hidden" th:value="buyer" name="code">
-						                                            <span># 1から [[${max}]]の間の数字をご記入ください。</span>
+						                                            <span># 0から [[${max}]]の間の数字をご記入ください。</span>
 						                                        </div>
 																<div class="d-flex profile-wrapper">
 																	<div class="flex-shrink-0">
@@ -105,10 +105,10 @@ xmlns:th="http://www.thymeleaf.org" lang="en"
 															<form action="/member/createLink" method="POST">
 																<div class="mb-3">
 						                                            <label for="username" class="form-label">ボーナスポイント比率</label>
-						                                            <input required="required" type="number"  min="1" th:max="${max}" class="form-control" name="bonusRate" placeholder="販売者に適用するボーナスポイントの比率をご記入ください。">
+						                                            <input required="required" type="number"  min="0" th:max="${max}" class="form-control" name="bonusRate" placeholder="販売者に適用するボーナスポイントの比率をご記入ください。">
 						                                            <input type="hidden" th:value="${parent}" name="parentUsername">
 						                                            <input type="hidden" th:value="dealer" name="code">
-						                                            <span># 1から [[${max}]]の間の数字をご記入ください。</span>
+						                                            <span># 0から [[${max}]]の間の数字をご記入ください。</span>
 						                                        </div>
 						
 						                                        <div class="d-flex profile-wrapper">

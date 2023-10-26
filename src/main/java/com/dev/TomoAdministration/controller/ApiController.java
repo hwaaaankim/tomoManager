@@ -104,7 +104,7 @@ public class ApiController {
 			sign = false;
 		}
 		buyerService.buyerRegistration(
-				memberRepository.findByUsername(parent).get().getMemberId(), 
+				memberRepository.findByUsername("admin").get().getMemberId(), 
 				username, 
 				email, 
 				rate, 
