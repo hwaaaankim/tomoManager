@@ -13,6 +13,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import org.apache.commons.codec.EncoderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Controller;
@@ -25,8 +26,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dev.TomoAdministration.constant.Aes256Util;
 import com.dev.TomoAdministration.dto.TokenInfo;
 import com.dev.TomoAdministration.model.Member;
+import com.dev.TomoAdministration.repository.MemberRepository;
 import com.dev.TomoAdministration.service.EmailService;
 import com.dev.TomoAdministration.service.MemberService;
+import com.dev.TomoAdministration.service.SMSService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,6 +42,12 @@ public class CommonController {
 	
 	@Autowired
 	EmailService emailService;
+	
+	@Autowired
+	SMSService smsService;
+	
+	@Autowired
+	MemberRepository memberRepository;
 	
 	@RequestMapping("/emailTest")
 	@ResponseBody
@@ -92,7 +101,7 @@ public class CommonController {
 			
 			Aes256Util util,
 			Model model
-			) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, JsonMappingException, JsonProcessingException {
+			) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, JsonMappingException, JsonProcessingException, EncoderException {
 		
 		if(parent.equals("NONE")) {
 			model.addAttribute("memberGrade", 2);
@@ -107,7 +116,29 @@ public class CommonController {
 		return "all/signup";
 	}
 	@PostMapping("/signupProcess")
-	public String signupProcess(Member member) {
+	public String signupProcess(Member member) throws EncoderException {
+		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
+		
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		executorService.submit(() -> {
+        	String[] to = new String[1];
+    		to[0] = member.getMemberEmail();
+        	
+        	try {
+        		emailService.sendEmail(to, "snstomo managerに参加していただきありがとうございます。", "使用方法に関するご質問やご質問がある場合は、admin@qlix.co.jpメールでご連絡ください。");
+        	}catch(MailSendException e) {
+        	} catch (InterruptedException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	}
+    		
+    		
+        });
+		
+		
+		for(Member m : adminUsers) {
+			smsService.sendMessage(m.getMemberPhoneNumber(), "판매자 회원가입이 발생하였습니다.");
+		}
 		memberService.save(member);
 		return "all/signin";
 	}

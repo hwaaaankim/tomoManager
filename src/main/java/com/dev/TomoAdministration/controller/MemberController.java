@@ -24,6 +24,8 @@ import com.dev.TomoAdministration.constant.Aes256Util;
 import com.dev.TomoAdministration.dto.TokenInfo;
 import com.dev.TomoAdministration.model.Member;
 import com.dev.TomoAdministration.repository.MemberRepository;
+import com.dev.TomoAdministration.service.EmailService;
+import com.dev.TomoAdministration.service.SMSService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,6 +35,12 @@ public class MemberController {
 	
 	@Autowired
 	MemberRepository memberRepository;
+	
+	@Autowired
+	SMSService smsService;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@RequestMapping("/myInfo")
 	public String myInfo() {

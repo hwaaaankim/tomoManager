@@ -4,12 +4,17 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import org.apache.commons.codec.EncoderException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSendException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +30,9 @@ import com.dev.TomoAdministration.repository.BuyerRepository;
 import com.dev.TomoAdministration.repository.MemberRepository;
 import com.dev.TomoAdministration.service.BuyerLogService;
 import com.dev.TomoAdministration.service.BuyerService;
+import com.dev.TomoAdministration.service.EmailService;
 import com.dev.TomoAdministration.service.MemberService;
+import com.dev.TomoAdministration.service.SMSService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +56,12 @@ public class ApiController {
 	
 	@Autowired
 	BuyerLogService buyerLogService;
+	
+	@Autowired
+	SMSService smsService;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@RequestMapping("/jwtTest")
 	@ResponseBody
@@ -81,8 +94,11 @@ public class ApiController {
 			@RequestParam(name = "link", required = false) String link,
 			@RequestParam(name = "price", required = false) String price,
 			@RequestParam(name = "username", required = false) String username
-			) {
-		
+			) throws EncoderException {
+		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
+		for(Member member : adminUsers) {
+			smsService.sendMessage(member.getMemberPhoneNumber(), "최종 구매자의 구매 활동이 발생하였습니다.");
+		}
 		buyerLogService.buyerLogging(link, username, price);
 		return "success";
 	}
@@ -97,7 +113,7 @@ public class ApiController {
 			Aes256Util util,
 			Model model,
 			Buyer buyer
-			) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, JsonMappingException, JsonProcessingException {
+			) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, JsonMappingException, JsonProcessingException, EncoderException {
 		
 		Boolean sign = true;
 		if(parent.equals("snstomo")) {
@@ -109,7 +125,78 @@ public class ApiController {
 				email, 
 				rate, 
 				sign);
+		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
+		for(Member member : adminUsers) {
+			smsService.sendMessage(member.getMemberPhoneNumber(), "최종 구매자 회원가입이 발생하였습니다.");
+		}
 		
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		executorService.submit(() -> {
+        	String[] to = new String[1];
+    		to[0] = email;
+        	
+        	try {
+        		emailService.sendEmail(to, "snstomoに会員登録していただきありがとうございます。 ", username + "様\r\n" + 
+        				"\r\n" + 
+        				"この度はSNS TOMOにご登録いただきまして誠にありがとうございます。\r\n" + 
+        				"国内最高品質のSNS拡散サービス「SNS TOMO」でお客様のSNSアカウントを拡散してみてください。\r\n" + 
+        				"\r\n" + 
+        				"新規登録をしていただいたお客様を対象に20%のボーナスポイント支給キャンペーンを実施しております。\r\n" + 
+        				"今だけの特別なキャンペーンとなっております。\r\n" + 
+        				"是非この機会にポイントチャージをしてSNS TOMOをご利用くださいませ。\r\n" + 
+        				"\r\n" + 
+        				"=========================\r\n" + 
+        				"ボーナスポイントキャンペーンを確認しましたか？\r\n" + 
+        				"=========================\r\n" + 
+        				"\r\n" + 
+        				"期間限定キャンペーンを行っております。\r\n" + 
+        				"\r\n" + 
+        				"20％ボーナスポイント贈呈\r\n" + 
+        				"期限は2023/10/31まで\r\n" + 
+        				"\r\n" + 
+        				"【決済可能手段】\r\n" + 
+        				"クレジットカード、口座振込、PayPay、Paypal\r\n" + 
+        				"\r\n" + 
+        				"▼ ポイントチャージはこちら\r\n" + 
+        				"https://snstomo.co.jp/addfunds\r\n" + 
+        				"\r\n" + 
+        				"=========================\r\n" + 
+        				"SNS TOMOで拡散できるSNS\r\n" + 
+        				"=========================\r\n" + 
+        				"\r\n" + 
+        				"・Instagram\r\n" + 
+        				"・Twitter\r\n" + 
+        				"・TikTok\r\n" + 
+        				"・YouTube\r\n" + 
+        				"・Facebook\r\n" + 
+        				"・Thread\r\n" + 
+        				"  & etc\r\n" + 
+        				"\r\n" + 
+        				"=========================\r\n" + 
+        				"ログイン・お問い合わせ\r\n" + 
+        				"=========================\r\n" + 
+        				"\r\n" + 
+        				"▼ ログイン\r\n" + 
+        				"https://snstomo.co.jp/#signin\r\n" + 
+        				"▼ お問い合わせ\r\n" + 
+        				"Email : admin@qlix.co.jp\r\n" + 
+        				"\r\n" + 
+        				"\r\n" + 
+        				"\r\n" + 
+        				"※ パスワードを忘れてしまった場合はこちら。\r\n" + 
+        				"https://snstomo.co.jp/resetpassword\r\n" + 
+        				"\r\n" + 
+        				"━━━━━━━━━━━━━━━━━━━━\r\n" + 
+        				"運営会社 株式会社Qlix\r\n" + 
+        				"━━━━━━━━━━━━━━━━━━━━");
+        	}catch(MailSendException e) {
+        	} catch (InterruptedException e) {
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        	}
+    		
+    		
+        });
 		return buyer.toString();
 	}
 	
