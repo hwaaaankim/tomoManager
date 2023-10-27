@@ -55,7 +55,7 @@ public class MemberService{
 		member.setMemberEnabled(true);
 		member.setMemberJoinDate(new Date());
 		member.setMemberRole("ROLE_ADMIN");
-		member.setMemberParentUsername("NONE");
+		member.setMemberParentUsername("SNSTOMO");
 		member.setMemberBonusRate(100);
 		member.setMemberGrade(1);
 		
@@ -63,5 +63,36 @@ public class MemberService{
 		
 		return memberRepository.save(member);
 
+	}
+	
+	public void editProfile(Member member) {
+		if(member.getPassword()!=null) {
+			String encodedPassword = passwordEncoder().encode(member.getPassword());
+			memberRepository.findById(member.getMemberId()).ifPresent(m->{
+				m.setMemberAccountNumber(member.getMemberAccountNumber());
+				m.setMemberBankName(member.getMemberBankName());
+				m.setMemberBankPoint(member.getMemberBankPoint());
+				m.setPassword(encodedPassword);
+				m.setMemberTomoEmail(member.getMemberTomoEmail());
+				m.setMemberTomoUsername(member.getMemberTomoUsername());
+				m.setMemberName(member.getMemberName());
+				m.setMemberPhoneNumber(member.getMemberPhoneNumber());
+				m.setMemberEmail(member.getMemberEmail());
+				memberRepository.save(m);
+			});
+		}else {
+			memberRepository.findById(member.getMemberId()).ifPresent(m->{
+				m.setMemberAccountNumber(member.getMemberAccountNumber());
+				m.setMemberBankName(member.getMemberBankName());
+				m.setMemberBankPoint(member.getMemberBankPoint());
+				m.setMemberTomoEmail(member.getMemberTomoEmail());
+				m.setMemberTomoUsername(member.getMemberTomoUsername());
+				m.setMemberName(member.getMemberName());
+				m.setMemberPhoneNumber(member.getMemberPhoneNumber());
+				m.setMemberEmail(member.getMemberEmail());
+				memberRepository.save(m);
+			});	
+		}
+		
 	}
 }

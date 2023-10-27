@@ -25,6 +25,7 @@ import com.dev.TomoAdministration.dto.TokenInfo;
 import com.dev.TomoAdministration.model.Member;
 import com.dev.TomoAdministration.repository.MemberRepository;
 import com.dev.TomoAdministration.service.EmailService;
+import com.dev.TomoAdministration.service.MemberService;
 import com.dev.TomoAdministration.service.SMSService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,15 +38,48 @@ public class MemberController {
 	MemberRepository memberRepository;
 	
 	@Autowired
+	MemberService memberService;
+	
+	@Autowired
 	SMSService smsService;
 	
 	@Autowired
 	EmailService emailService;
 	
 	@RequestMapping("/myInfo")
-	public String myInfo() {
+	public String myInfo(
+			Model model,
+			Principal principal
+			) {
 		
+		Member member = memberRepository.findByUsername(principal.getName()).get();
+		model.addAttribute("member", member);
 		return "member/information/information";
+	}
+	
+	@RequestMapping("/clientManager")
+	public String clientManager() {
+		
+		return "member/buyer/clientManager";
+	}
+	
+	@PostMapping("/editProcess")
+	public String editProcess(
+			Member member
+			) {
+		memberService.editProfile(member);
+		return "redirect:/member/myInfo";
+	}
+	
+	@RequestMapping("/editInformation")
+	public String editInformation(
+			Model model,
+			Principal principal
+			) {
+		
+		Member member = memberRepository.findByUsername(principal.getName()).get();
+		model.addAttribute("member", member);
+		return "member/information/editInformation";
 	}
 	
 	@RequestMapping("/subMemberRegistrationCheck")
@@ -87,6 +121,8 @@ public class MemberController {
 		model.addAttribute("parent", principal.getName());
 		return "member/information/makeLink";
 	}
+	
+	
 	
 	@PostMapping("/createLink")
 	public String createLink(

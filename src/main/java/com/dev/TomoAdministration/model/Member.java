@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.lang.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -56,6 +58,14 @@ public class Member implements Serializable{
 	
 	@Column(name="MEMBER_PARENT_USERNAME")
 	private String memberParentUsername;
+	
+	@Column(name="MEMBER_BANK_NAME")
+	@Nullable
+	private String memberBankName;
+	
+	@Column(name="MEMBER_BANK_POINT")
+	@Nullable
+	private String memberBankPoint;
 	
 	@Column(name="MEMBER_BONUSRATE")
 	private int memberBonusRate;

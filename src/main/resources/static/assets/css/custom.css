@@ -15,3 +15,18 @@ File: Custom Css File
 #layout-wrapper > div.main-content > div > div > div > div.col > div > div:nth-child(3) > div:nth-child(2) > div > div.card-body > div.table-responsive.table-card > table > tbody > tr > td:nth-child(2){
 	text-align:right;
 }
+.edit-prifile input{
+	width:100%;
+	background:rgba(0,0,0,0.1);
+	border:none;
+	height:100%;
+	padding-left:10px;
+}
+.edit-prifile th, .edit-prifile td{
+	vertical-align:middle;
+	height:60px;
+}
+td#password-wrap input{
+
+	height:36px;
+}

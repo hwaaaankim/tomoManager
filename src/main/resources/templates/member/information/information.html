@@ -1,5 +1,8 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en"
+<html 
+xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+lang="en"
 	data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg"
 	data-sidebar-image="none" data-preloader="disable">
 
@@ -29,13 +32,13 @@
 						<div class="row g-4">
 							<div class="col">
 								<div class="p-2">
-									<h3 class="text-white mb-1">USER Name</h3>
-									<p class="text-white text-opacity-75">Grade</p>
+									<h3 class="text-white mb-1" sec:authentication="principal.membername">USER Name</h3>
+									<p class="text-white text-opacity-75" sec:authentication="principal.membergrade">Grade</p>
 									<div class="hstack text-white-50 gap-1">
 										<div class="me-2">
 											<i
-												class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Dealer
-											/ Sub Dealer
+												class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Manager
+											
 										</div>
 									</div>
 								</div>
@@ -45,66 +48,48 @@
 					</div>
 
 					<div class="row">
-						<div class="col-lg-12">
+						<div class="col-lg-8">
 							<div>
 								<div class="d-flex profile-wrapper">
-									<ul
-										class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1"
-										role="tablist">
-										<li class="nav-item"><a class="nav-link fs-14 active"
-											data-bs-toggle="tab" href="#overview-tab" role="tab"> <i
-												class="ri-airplay-fill d-inline-block d-md-none"></i> <span
-												class="d-none d-md-inline-block">Overview</span>
-										</a>
-										</li>
-									</ul>
 									<div class="flex-shrink-0">
 										<a href="/member/editInformation" class="btn btn-success"><i
-											class="ri-edit-box-line align-bottom"></i> Edit Profile</a>
+											class="ri-edit-box-line align-bottom"></i> EDIT PROFILE</a>
 									</div>
 								</div>
 								<div class="tab-content pt-4 text-muted">
 									<div class="tab-pane active" id="overview-tab" role="tabpanel">
 										<div class="row">
-											<div class="col-xxl-4">
+											<div class="col-xxl-6">
 
 												<div class="card">
 													<div class="card-body">
-														<h5 class="card-title mb-3">Information</h5>
+														<h5 class="card-title mb-3">USER INFORMATIONs</h5>
 														<div class="table-responsive">
 															<table class="table table-borderless mb-0">
 																<tbody>
 																	<tr>
-																		<th class="ps-0" scope="row">Manager Center 아이디 :</th>
-																		<td class="text-muted">Admin</td>
+																		<th class="ps-0" scope="row">SNSTOMO MANAGER CENTER ID :</th>
+																		<td class="text-muted" th:text="${member.username}">Admin</td>
 																	</tr>
 																	<tr>
-																		<th class="ps-0" scope="row">SNS TOMO 아이디 :</th>
-																		<td class="text-muted">Admin</td>
+																		<th class="ps-0" scope="row">NAME :</th>
+																		<td class="text-muted" th:text="${member.memberName}">Admin</td>
 																	</tr>
 																	<tr>
-																		<th class="ps-0" scope="row">Phone Number :</th>
-																		<td class="text-muted">010-1234-1234</td>
+																		<th class="ps-0" scope="row">SNSTOMO ID :</th>
+																		<td class="text-muted" th:text="${member.memberTomoUsername}">Admin</td>
 																	</tr>
 																	<tr>
-																		<th class="ps-0" scope="row">E-mail :</th>
-																		<td class="text-muted">email@email.com</td>
+																		<th class="ps-0" scope="row">SNSTOMO EMAIL :</th>
+																		<td class="text-muted" th:text="${member.memberTomoEmail}">Admin</td>
 																	</tr>
 																	<tr>
-																		<th class="ps-0" scope="row">Account Number :</th>
-																		<td class="text-muted">123-1234-1234</td>
+																		<th class="ps-0" scope="row">PHONE NUMBER :</th>
+																		<td class="text-muted" th:text="${member.memberPhoneNumber}">010-1234-1234</td>
 																	</tr>
 																	<tr>
-																		<th class="ps-0" scope="row">Joining Date</th>
-																		<td class="text-muted">2023.01.01</td>
-																	</tr>
-																	<tr>
-																		<th class="ps-0" scope="row">Bonus Rate</th>
-																		<td class="text-muted">30</td>
-																	</tr>
-																	<tr>
-																		<th class="ps-0" scope="row">Parent Username</th>
-																		<td class="text-muted">admin</td>
+																		<th class="ps-0" scope="row">E-MAIL :</th>
+																		<td class="text-muted" th:text="${member.memberEmail}">email@email.com</td>
 																	</tr>
 																</tbody>
 															</table>
@@ -113,108 +98,48 @@
 												</div>
 
 											</div>
-											<div class="col-xxl-8">
+											<div class="col-xxl-6">
 
-												<div class="row">
-													<div class="col-lg-12">
-														<div class="card">
-															<div class="card-body">
-																<h5 class="card-title mb-3">Recent Works</h5>
-																<div class="tab-content text-muted">
-																	<div class="tab-pane active" role="tabpanel">
-																		<div class="profile-timeline">
-																			<div class="accordion accordion-flush"
-																				id="todayExample">
-																				<div class="accordion-item border-0">
-																					<div class="accordion-header" id="headingOne">
-																						<a class="accordion-button p-2 shadow-none"
-																							data-bs-toggle="collapse" href="#collapseOne"
-																							aria-expanded="true">
-																							<div class="d-flex">
-																								<div class="flex-shrink-0 avatar-xs">
-																									<div
-																										class="avatar-title bg-light text-success rounded-circle">
-																										M</div>
-																								</div>
-																								<div class="flex-grow-1 ms-3">
-																									<h6 class="fs-14 mb-1">고객명</h6>
-																									<small class="text-muted">200엔 물품 구매</small><br>
-																									<small class="text-muted">2023.01.01</small>
-																								</div>
-																							</div>
-																						</a>
-																					</div>
-																				</div>
-																				<div class="accordion-item border-0">
-																					<div class="accordion-header" id="headingFour">
-																						<a class="accordion-button p-2 shadow-none"
-																							data-bs-toggle="collapse" href="#collapseFour"
-																							aria-expanded="true">
-																							<div class="d-flex">
-																								<div class="flex-shrink-0 avatar-xs">
-																									<div
-																										class="avatar-title bg-light text-muted rounded-circle">
-																										<i class="ri-user-3-fill"></i>
-																									</div>
-																								</div>
-																								<div class="flex-grow-1 ms-3">
-																									<h6 class="fs-14 mb-1">고객명</h6>
-																									<small class="text-muted">200엔 물품 구매</small><br>
-																									<small class="text-muted">2023.01.01</small>
-																								</div>
-																							</div>
-																						</a>
-																					</div>
-																				</div>
-																				<div class="accordion-item border-0">
-																					<div class="accordion-header" id="headingOne">
-																						<a class="accordion-button p-2 shadow-none"
-																							data-bs-toggle="collapse" href="#collapseOne"
-																							aria-expanded="true">
-																							<div class="d-flex">
-																								<div class="flex-shrink-0 avatar-xs">
-																									<div
-																										class="avatar-title bg-light text-success rounded-circle">
-																										M</div>
-																								</div>
-																								<div class="flex-grow-1 ms-3">
-																									<h6 class="fs-14 mb-1">고객명</h6>
-																									<small class="text-muted">200엔 물품 구매</small><br>
-																									<small class="text-muted">2023.01.01</small>
-																								</div>
-																							</div>
-																						</a>
-																					</div>
-																				</div>
-																				<div class="accordion-item border-0">
-																					<div class="accordion-header" id="headingFour">
-																						<a class="accordion-button p-2 shadow-none"
-																							data-bs-toggle="collapse" href="#collapseFour"
-																							aria-expanded="true">
-																							<div class="d-flex">
-																								<div class="flex-shrink-0 avatar-xs">
-																									<div
-																										class="avatar-title bg-light text-muted rounded-circle">
-																										<i class="ri-user-3-fill"></i>
-																									</div>
-																								</div>
-																								<div class="flex-grow-1 ms-3">
-																									<h6 class="fs-14 mb-1">고객명</h6>
-																									<small class="text-muted">200엔 물품 구매</small><br>
-																									<small class="text-muted">2023.01.01</small>
-																								</div>
-																							</div>
-																						</a>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
+												<div class="card">
+													<div class="card-body">
+														<div class="table-responsive">
+															<table class="table table-borderless mb-0">
+																<tbody>
+																	<tr>
+																		<th class="ps-0" scope="row">銀行名</th>
+																		<td class="text-muted" th:text="${member.memberBankName}">2023.01.01</td>
+																	</tr>
+																	<tr>
+																		<th class="ps-0" scope="row">支店名</th>
+																		<td class="text-muted" th:text="${member.memberBankPoint}">30</td>
+																	</tr>
+																	<tr>
+																		<th class="ps-0" scope="row">ACCOUNT NUMBER :</th>
+																		<td class="text-muted" th:text="${member.memberAccountNumber}">123-1234-1234</td>
+																	</tr>
+																	<tr>
+																		<th class="ps-0" scope="row">JOINING DATE</th>
+																		<td class="text-muted" id="joinDate" th:text="${member.memberJoinDate}">2023.01.01</td>
+																	</tr>
+																	<tr>
+																		<th class="ps-0" scope="row">BONUS RATE</th>
+																		<td class="text-muted" th:text="${member.memberBonusRate}">30</td>
+																	</tr>
+																	
+																	<tr>
+																		<th class="ps-0" scope="row">PARENT USER</th>
+																		<td class="text-muted" th:text="${member.memberParentUsername}">admin</td>
+																	</tr>
+																	<tr>
+																		<th class="ps-0" scope="row">GRADE</th>
+																		<td class="text-muted" >MANAGER</td>
+																	</tr>
+																</tbody>
+															</table>
 														</div>
 													</div>
 												</div>
+
 											</div>
 										</div>
 									</div>
@@ -245,8 +170,15 @@
 	</div>
 
 
-
+	<script>
+	var joinDate = document.getElementById('joinDate');
+	var txt = joinDate.innerText;
+	console.log(txt);
+	var newDate = txt.substring(0, 10);
+	document.getElementById('joinDate').innerText = newDate;
+	</script>
 	<th:block th:replace="fragments/common :: scriptSrc"></th:block>
+	
 </body>
 
 </html>

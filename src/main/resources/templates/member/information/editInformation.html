@@ -1,0 +1,236 @@
+<!doctype html>
+<html 
+xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+lang="en"
+	data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg"
+	data-sidebar-image="none" data-preloader="disable">
+
+<head th:replace="fragments/common :: headSrc">
+
+</head>
+
+<body>
+
+	<div id="layout-wrapper">
+
+
+		<th:block th:replace="fragments/common :: headerSrc"></th:block>
+		<th:block th:replace="fragments/common :: navSrc"></th:block>
+
+		<div class="main-content">
+
+			<div class="page-content">
+				<div class="container-fluid">
+					<div class="profile-foreground position-relative mx-n4 mt-n4">
+						<div class="profile-wid-bg">
+							<img src="assets/images/profile-bg.jpg" alt=""
+								class="profile-wid-img" />
+						</div>
+					</div>
+					<div class="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
+						<div class="row g-4">
+							<div class="col">
+								<div class="p-2">
+									<h3 class="text-white mb-1" sec:authentication="principal.membername">USER Name</h3>
+									<p class="text-white text-opacity-75" sec:authentication="principal.membergrade">Grade</p>
+									<div class="hstack text-white-50 gap-1">
+										<div class="me-2">
+											<i
+												class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Manager
+											
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-10">
+							<div>
+								<form action="/member/editProcess" method="POST">
+									<div class="d-flex profile-wrapper">
+										<div class="flex-shrink-0">
+											<button class="btn btn-success"><i
+												class="ri-edit-box-line align-bottom"></i> CONFIRM</button>
+										</div>
+									</div>
+									<div class="tab-content pt-4 text-muted">
+										<div class="tab-pane active" id="overview-tab" role="tabpanel">
+											<div class="row">
+												<div class="col-xxl-6">
+	
+													<div class="card">
+														<div class="card-body">
+															<h5 class="card-title mb-3">EDIT USER INFORMATIONs</h5>
+															<p class="info-message"># MANAGER CENTER의 ID, 회원가입일, 상위 유저 정보, 인센티브 비율은 변경할 수 없습니다.</p>
+															<p class="info-message"># SNSTOMO 사이트에 회원가입 후 아이디와 이메일을 입력후 상품 구매시 혜택을 받을 수 있습니다.</p>
+															<p class="info-message"># 비밀번호 변경을 위해서는 '비밀번호리셋' 버튼 클릭 후 새로 사용할 비밀번호를 입력 해 주시기 바랍니다.</p>
+															<p class="info-message"># 변경하고자 하는 정보 입력 후 확인 버튼을 누르면 변경사항이 저장됩니다.</p>
+															<div class="table-responsive mt-5">
+																<table class="table table-borderless mb-0 edit-prifile">
+																	<tbody>
+																		<tr>
+																			<th class="ps-0" scope="row">SNSTOMO MANAGER CENTER ID :</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.username}" readonly="readonly" disabled="disabled">
+																				<input type="hidden" name="memberId" th:value="${member.memberId}">	
+																			</td>
+																		</tr>
+																		
+																		<tr>
+																			<th class="ps-0" scope="row">SNSTOMO MANAGER CENTER PASSWORD :<br>
+																				<button id="password-reset-btn" class="btn btn-danger mt-2">RESET PASSWORD</button>
+																			</th>
+																			<td class="text-muted" id="password-wrap">
+																				<input type="password" id="password" th:value="${member.password}" disabled="disabled" name="password" required="required">
+																			</td>
+																		</tr>
+																		
+																		<tr>
+																			<th class="ps-0" scope="row">SNSTOMO ID :</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberTomoUsername}" required="required" name="memberTomoUsername">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">SNSTOMO EMAIL :</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberTomoEmail}" required="required" name="memberTomoEmail">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">NAME :</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberName}" required="required" name="memberName">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">PHONE NUMBER :</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberPhoneNumber}" required="required" name="memberPhoneNumber">
+																			</td>
+																		</tr>
+																		
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+	
+												</div>
+												<div class="col-xxl-6">
+	
+													<div class="card">
+														<div class="card-body">
+															<div class="table-responsive">
+																<table class="table table-borderless mb-0 edit-prifile">
+																	<tbody>
+																		<tr>
+																			<th class="ps-0" scope="row">E-MAIL :</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberEmail}" required="required" name="memberEmail">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">ACCOUNT NUMBER :</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberAccountNumber}" required="required" name="memberAccountNumber">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">銀行名 :</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberBankName}" required="required" name="memberBankName">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">支店名 :</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberBankPoint}" required="required" name="memberBankPoint">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">PARENT USER</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberParentUsername}" disabled="disabled" readonly="readonly">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">MEMBER GRADE</th>
+																			<td class="text-muted">
+																				<input type="text" value="manager" disabled="disabled" readonly="readonly">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">JOINING DATE</th>
+																			<td class="text-muted">
+																				<input type="text" id="joinDate" th:value="${member.memberJoinDate}"  disabled="disabled" readonly="readonly">
+																			</td>
+																		</tr>
+																		<tr>
+																			<th class="ps-0" scope="row">BONUS RATE</th>
+																			<td class="text-muted">
+																				<input type="text" th:value="${member.memberBonusRate}" disabled="disabled" readonly="readonly">
+																			</td>
+																		</tr>
+																		
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+	
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<th:block th:replace="fragments/common :: footerSrc"></th:block>
+	</div>
+
+
+
+	<button onclick="topFunction()" class="btn btn-danger btn-icon"
+		id="back-to-top">
+		<i class="ri-arrow-up-line"></i>
+	</button>
+
+	<div id="preloader">
+		<div id="status">
+			<div class="spinner-border text-primary avatar-sm" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	
+	<script>
+	
+	$(function(){
+		$('#password-reset-btn').on('click', function(){
+			$('#password').attr('disabled', false);
+			$('#password').val('');
+		});
+	})
+	
+	var joinDate = document.getElementById('joinDate');
+	var txt = joinDate.value;
+	var newDate = txt.substring(0, 10);
+	document.getElementById('joinDate').value = newDate;
+	</script>
+	<th:block th:replace="fragments/common :: scriptSrc"></th:block>
+	
+</body>
+
+</html>

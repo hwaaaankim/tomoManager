@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dev.TomoAdministration.constant.Aes256Util;
-import com.dev.TomoAdministration.dto.TokenInfo;
 import com.dev.TomoAdministration.model.Member;
 import com.dev.TomoAdministration.repository.MemberRepository;
 import com.dev.TomoAdministration.service.EmailService;
@@ -32,7 +31,6 @@ import com.dev.TomoAdministration.service.MemberService;
 import com.dev.TomoAdministration.service.SMSService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class CommonController {
@@ -118,6 +116,19 @@ public class CommonController {
 	@PostMapping("/signupProcess")
 	public String signupProcess(Member member) throws EncoderException {
 		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
+		
+		if(member.getMemberTomoEmail().equals("")) {
+			member.setMemberTomoEmail("NONE");
+		}
+		if(member.getMemberTomoUsername().equals("")) {
+			member.setMemberTomoUsername("NONE");
+		}	
+		if(member.getMemberBankName().equals("")) {
+			member.setMemberBankName("NONE");
+		}
+		if(member.getMemberBankPoint().equals("")) {
+			member.setMemberBankPoint("NONE");
+		}
 		
 		ExecutorService executorService = Executors.newCachedThreadPool();
 		executorService.submit(() -> {
