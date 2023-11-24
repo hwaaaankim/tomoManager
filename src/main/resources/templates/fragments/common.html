@@ -170,13 +170,13 @@ lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" da
 									<li
 									 sec:authorize = "hasRole('MEMBER')"
 									 class="nav-item"><a href="/member/dealerManager"
-										class="nav-link" data-key="t-analytics"> 2次販売者管理 </a></li>
+										class="nav-link" data-key="t-analytics"> ２次販売者管理</a></li>
 									<li
 									 sec:authorize = "hasRole('ADMIN')"
 									 class="nav-item"><a href="/member/subMemberRegistrationCheck"
 										class="nav-link" data-key="t-analytics"> サブディーラー申請管理 </a></li>	
 									<li class="nav-item"><a href="/member/clientManager"
-										class="nav-link" data-key="t-crm"> 一般顧客管理 </a></li>
+										class="nav-link" data-key="t-crm"> 最終購入者管理 </a></li>
 								</ul>
 							</div>
 						</li>
@@ -236,13 +236,14 @@ lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" da
 	    </footer>
     </th:block>
 	<th:block th:fragment="scriptSrc">
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	    <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
 	    <script src="/assets/libs/simplebar/simplebar.min.js"></script>
 	    <script src="/assets/libs/node-waves/waves.min.js"></script>
 	    <script src="/assets/libs/feather-icons/feather.min.js"></script>
 	    <script src="/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
 	    <script src="/assets/js/plugins.js"></script>
-	     <script src="/assets/js/app.js"></script>
+	    <script src="/assets/js/app.js"></script>
 	    <script src="/assets/js/pages/particles.app.js"></script>
 	    <script src="/assets/js/pages/dashboard-ecommerce.init.js"></script>
 	    <script src="/assets/libs/swiper/swiper-bundle.min.js"></script>

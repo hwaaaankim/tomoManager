@@ -1,12 +1,16 @@
 package com.dev.TomoAdministration.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -48,4 +52,12 @@ public class Buyer {
 	
 	@Column(name="BUYER_SIGN")
 	private Boolean buyerSign;
+	
+	@OneToMany(
+			fetch = FetchType.LAZY, 
+			cascade = CascadeType.ALL,
+			orphanRemoval = true,
+			mappedBy = "buyerLogBuyerId"
+			)
+	private List<BuyerLog> logs;
 }

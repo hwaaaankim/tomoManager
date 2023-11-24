@@ -21,90 +21,129 @@
 			<div class="page-content">
 				<div class="row">
 					<div class="col-lg-12">
-						<div class="card">
-							<div class="card-header">
-								<h5 class="card-title mb-0">딜러 회원가입 신청자</h5>
+						<div class="h-100">
+							<div class="row mb-3 pb-1">
+								<div class="col-12">
+									<div
+										class="d-flex align-items-lg-center flex-lg-row flex-column">
+										<div class="flex-grow-1">
+											<h4 class="fs-16 mb-1"># 딜러 회원가입 신청자</h4>
+											<p class="text-muted mb-0"># 정회원 전환 시 해당 유저는 판매자로 사이트 이용이
+												가능합니다.</p>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="card-body">
-								<table id="example"
-									class="table table-bordered dt-responsive nowrap table-striped align-middle"
-									style="width: 100%">
-									<thead>
-										<tr>
-											<th>APP NO.</th>
-											<th>User Email</th>
-											<th>User ID</th>
-											<th>Created By</th>
-											<th>Create Date</th>
-											<th>Grade</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="m:${members}">
-											<td th:text="${m.memberId}">01</td>
-											<td th:text="${m.memberEmail}">teriwoo@naver.com</td>
-											<td><a  th:href="@{|/admin/applyMemberDetail/${m.memberId}|}" th:text="${m.username}">teriwoo</a></td>
-											<td th:text="${m.memberParentUsername}">Parent User</td>
-											<td th:text="${m.memberJoinDate}">2023.01.01</td>
-											<td><span th:if="${m.memberGrade == 2 }" class="badge bg-danger">1st Dealer</span>
-											<span th:if="${m.memberGrade == 3 }" class="badge bg-info">2nd Dealer</span></td>
-											<td>
-												<div class="dropdown d-inline-block">
-													<button class="btn btn-soft-secondary btn-sm dropdown"
-														type="button" data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="ri-more-fill align-middle"></i>
-													</button>
-													<ul class="dropdown-menu dropdown-menu-end">
-														<li><a th:href="@{|/admin/applyMemberDetail/${m.memberId}|}" class="dropdown-item"><i
-																class="ri-eye-fill align-bottom me-2 text-muted"></i>
-																상세보기</a></li>
-														<li><a th:href="@{|/admin/applyMemberDetail/${m.memberId}|}" class="dropdown-item"> <i
-																class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-																삭제하기
-														</a></li>
-														<li><a th:href="@{|/admin/changeMemberStatus/${m.memberId}|}" class="dropdown-item"> <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-																정회원 전환
-														</a></li>
-													</ul>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="card">
+										<div class="card-header">
+											<h4 class="card-title mb-0">MEMBER REGISTRATION
+												MANAGEMENT SYSTEM</h4>
+										</div>
+
+										<div class="card-body">
+											<div class="listjs-table" id="customerList">
+												<div class="row g-4 mb-3">
+													<div class="col-sm-auto">
+														<div>
+															<button type="button" class="btn btn-success add-btn">
+																<i class="ri-add-line align-bottom me-1"></i> ADD MEMBER
+															</button>
+														</div>
+													</div>
 												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								<nav aria-label="Page navigation example">
-									<ul class="pagination justify-content-end">
-										<li class="page-item"
-											th:classappend="${1 == members.pageable.pageNumber+1} ? 'disabled'">
-											<a class="page-link" href="#"
-											th:href="@{/admin/memberRegistrationCheck(page=0, size=${param.size})}"
-											tabindex="-1" aria-disabled="true">First</a>
-										</li>
-										<li class="page-item"
-											th:classappend="${1 == members.pageable.pageNumber+1} ? 'disabled'">
-											<a class="page-link" href="#"
-											th:href="@{/admin/memberRegistrationCheck(page=${members.pageable.pageNumber - 1}, size=${param.size})}"
-											tabindex="-1" aria-disabled="true">Previous</a>
-										</li>
-										<li class="page-item"
-											th:classappend="${i == members.pageable.pageNumber+1} ? 'disabled'"
-											th:each="i : ${#numbers.sequence(startPage, endPage)}">
-											<a	class="page-link" href="#" th:text=${i}
-											th:href="@{/admin/memberRegistrationCheck(page=${i-1}, size=${param.size})}">1</a>
-										</li>
-										<li class="page-item"
-											th:classappend="${members.totalPages == members.pageable.pageNumber + 1} ? 'disabled'">
-											<a class="page-link" href="#"
-											th:href="@{/admin/memberRegistrationCheck(page=${members.pageable.pageNumber + 1}, size=${param.size})}">Next</a>
-										</li>
-										<li class="page-item"
-											th:classappend="${members.totalPages == members.pageable.pageNumber + 1} ? 'disabled'">
-											<a class="page-link" href="#"
-											th:href="@{/admin/memberRegistrationCheck(page=${members.totalPages-1}, size=${param.size})}">Last</a>
-										</li>
-									</ul>
-								</nav>
+
+												<div class="table-responsive mt-3 mb-1">
+													<table class="table align-middle table-nowrap"
+														id="customerTable">
+														<thead class="table-light">
+															<tr>
+																<th>APP NO.</th>
+																<th>User Email</th>
+																<th>User ID</th>
+																<th>Created By</th>
+																<th>Create Date</th>
+																<th>Grade</th>
+																<th>Action</th>
+															</tr>
+														</thead>
+														<tbody class="list form-check-all">
+															<tr th:each="m:${members}">
+																<td th:text="${m.memberId}">01</td>
+																<td th:text="${m.memberEmail}">teriwoo@naver.com</td>
+																<td><a  th:href="@{|/admin/applyMemberDetail/${m.memberId}|}" th:text="${m.username}">teriwoo</a></td>
+																<td th:text="${m.memberParentUsername}">Parent User</td>
+																<td th:text="${m.memberJoinDate}">2023.01.01</td>
+																<td> 2nd Dealer</td>
+																<td>
+																	<div class="dropdown d-inline-block">
+																		<button class="btn btn-soft-secondary btn-sm dropdown"
+																			type="button" data-bs-toggle="dropdown"
+																			aria-expanded="false">
+																			<i class="ri-more-fill align-middle"></i>
+																		</button>
+																		<ul class="dropdown-menu dropdown-menu-end">
+																			<li><a th:href="@{|/admin/applyMemberDetail/${m.memberId}|}" class="dropdown-item"><i
+																					class="ri-eye-fill align-bottom me-2 text-muted"></i>
+																					상세보기</a></li>
+																			<li><a th:href="@{|/admin/applyMemberDetail/${m.memberId}|}" class="dropdown-item"> <i
+																					class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
+																					삭제하기
+																			</a></li>
+																			<li><a th:href="@{|/member/changeSubMemberStatus/${m.memberId}|}" class="dropdown-item"> <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+																					정회원 전환
+																			</a></li>
+																		</ul>
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+													<div class="noresult" th:if="${members.totalElements == 0}">
+														<div class="text-center">
+															<h5 class="mt-2">새로운 판매자 회원가입 신청이 존재하지 않습니다.</h5>
+															<p class="text-muted mb-0">판매자 회원 가입 신청 발생 시 SMS를 통해 안내 해 드립니다.</p>
+														</div>
+													</div>
+												</div>
+
+												<nav aria-label="Page navigation example">
+													<ul class="pagination justify-content-end">
+														<li class="page-item"
+															th:classappend="${1 == members.pageable.pageNumber+1} ? 'disabled'">
+															<a class="page-link" href="#"
+															th:href="@{/admin/memberRegistrationCheck(page=0, size=${param.size})}"
+															tabindex="-1" aria-disabled="true">First</a>
+														</li>
+														<li class="page-item"
+															th:classappend="${1 == members.pageable.pageNumber+1} ? 'disabled'">
+															<a class="page-link" href="#"
+															th:href="@{/admin/memberRegistrationCheck(page=${members.pageable.pageNumber - 1}, size=${param.size})}"
+															tabindex="-1" aria-disabled="true">Previous</a>
+														</li>
+														<li class="page-item"
+															th:classappend="${i == members.pageable.pageNumber+1} ? 'disabled'"
+															th:each="i : ${#numbers.sequence(startPage, endPage)}">
+															<a class="page-link" href="#" th:text=${i}
+															th:href="@{/admin/memberRegistrationCheck(page=${i-1}, size=${param.size})}">1</a>
+														</li>
+														<li class="page-item"
+															th:classappend="${members.totalPages == members.pageable.pageNumber + 1} ? 'disabled'">
+															<a class="page-link" href="#"
+															th:href="@{/admin/memberRegistrationCheck(page=${members.pageable.pageNumber + 1}, size=${param.size})}">Next</a>
+														</li>
+														<li class="page-item"
+															th:classappend="${members.totalPages == members.pageable.pageNumber + 1} ? 'disabled'">
+															<a class="page-link" href="#"
+															th:href="@{/admin/memberRegistrationCheck(page=${members.totalPages-1}, size=${param.size})}">Last</a>
+														</li>
+													</ul>
+												</nav>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -118,7 +157,7 @@
 
 
 	<th:block th:replace="fragments/common :: scriptSrc"></th:block>
-	
+
 </body>
 
 </html>

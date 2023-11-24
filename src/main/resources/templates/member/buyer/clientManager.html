@@ -54,28 +54,50 @@
 															</div>
 														</div>
 														<div class="col-sm">
-															<div class="d-flex justify-content-sm-end">
-																<div class="ms-2">
-																	<select class="form-control">
-																		<option>=== PAGE SIZE ===</option>
-																	</select>
+															<form role="form" method="POST" th:action="@{/member/clientManager}">
+																<div class="d-flex justify-content-sm-end">
+																	<div class="ms-2">
+																		<select class="form-control" th:name="size" id="pageSize">
+																			<option th:value="10" th:selected="${buyers.pageable.pageSize}=='10'">10개씩 보기</option>
+																			<option th:value="30" th:selected="${buyers.pageable.pageSize}=='30'">30개씩 보기</option>
+																			<option th:value="50" th:selected="${buyers.pageable.pageSize}=='50'">50개씩 보기</option>
+																			<option th:value="100" th:selected="${buyers.pageable.pageSize}=='100'">100개씩 보기</option>
+																		</select>
+																	</div>
+																	<div class="ms-2">
+																		<select class="form-control" name="searchType" id="searchType">
+																			<option id="searchBasic" value="none">=== 검색조건 선택 ===</option>
+																			<option id="searchUsername" th:value="username">=== ID로 검색 ===</option>
+																			<option id="searchEmail" th:value="email">=== EMAIL로 검색 ===</option>
+																			<option id="searchPeriod" th:value="period">=== 기간별 검색 ===</option>
+																		</select>
+																	</div>
+																	<div class="ms-2" id="textSearch" style="margin-right:10px;">
+																		<input type="text" class="form-control" placeholder="검색어를 입력 해 주세요."> 
+																	</div>
+																	<div id="periodSearch" style="display:flex;">
+																		<input 
+																			type="date" 
+																			id="startDate" 
+																			name="startDate"
+                                              							    th:value="${param.startDate}" 
+                                              							    style="margin-right:10px; margin-left:10px;" 
+                                              							    class="form-control"> 
+																		<input 
+																			type="date" 
+																			id="endDate" 
+																			name="endDate"
+                                              							    th:value="${param.endDate}" 
+																			class="form-control" 
+																			style="margin-right:10px;"> 
+																	</div>
+																	<button type="submit" class="btn btn-success"> 검색 </button>
 																</div>
-																<div class="ms-2">
-																	<select class="form-control">
-																		<option>=== SEARCH TYPE ===</option>
-																	</select>
-																</div>
-																<div class="ms-2" style="margin-right:10px;">
-																	<input type="text" class="form-control"
-																		placeholder="INPUT KEWWORD"> 
-																</div>
-																<button type="button" class="btn btn-success add-btn"> SEARCH
-																</button>
-															</div>
+															</form>
 														</div>
 													</div>
 
-													<div class="table-responsive table-card mt-3 mb-1">
+													<div class="table-responsive mt-3 mb-1">
 														<table class="table align-middle table-nowrap"
 															id="customerTable">
 															<thead class="table-light">
@@ -95,282 +117,80 @@
 																</tr>
 															</thead>
 															<tbody class="list form-check-all">
-																<tr>
+																<tr th:each="b:${buyers}">
 																	<th scope="row">
 																		<div class="form-check">
 																			<input class="form-check-input" type="checkbox"
 																				name="chk_child" value="option1">
 																		</div>
 																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
+																	<td class="customer_name">
+																	<a th:href="@{|/member/clientDetail/${b.buyerId}|}" th:text="${b.buyerUsername}">Mary Cousar</a></td>
+																	<td class="phone" th:text="${b.buyerEmail}">580-464-4694</td>
+																	<td class="phone" th:text="${b.buyerJoinDate}">580-464-4694</td>
+																	<td class="phone" th:text="${b.buyerBonusRate}">580-464-4694</td>
 																	<td class="status"><span
 																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
 																	<td>
 																		<div class="d-flex gap-2">
 																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
+																				<a class="btn btn-sm btn-success edit-item-btn">EDIT</a>
 																			</div>
 																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<th scope="row">
-																		<div class="form-check">
-																			<input class="form-check-input" type="checkbox"
-																				name="chk_child" value="option1">
-																		</div>
-																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
-																	<td>
-																		<div class="d-flex gap-2">
-																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
-																			</div>
-																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<th scope="row">
-																		<div class="form-check">
-																			<input class="form-check-input" type="checkbox"
-																				name="chk_child" value="option1">
-																		</div>
-																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
-																	<td>
-																		<div class="d-flex gap-2">
-																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
-																			</div>
-																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<th scope="row">
-																		<div class="form-check">
-																			<input class="form-check-input" type="checkbox"
-																				name="chk_child" value="option1">
-																		</div>
-																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
-																	<td>
-																		<div class="d-flex gap-2">
-																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
-																			</div>
-																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<th scope="row">
-																		<div class="form-check">
-																			<input class="form-check-input" type="checkbox"
-																				name="chk_child" value="option1">
-																		</div>
-																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
-																	<td>
-																		<div class="d-flex gap-2">
-																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
-																			</div>
-																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<th scope="row">
-																		<div class="form-check">
-																			<input class="form-check-input" type="checkbox"
-																				name="chk_child" value="option1">
-																		</div>
-																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
-																	<td>
-																		<div class="d-flex gap-2">
-																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
-																			</div>
-																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<th scope="row">
-																		<div class="form-check">
-																			<input class="form-check-input" type="checkbox"
-																				name="chk_child" value="option1">
-																		</div>
-																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
-																	<td>
-																		<div class="d-flex gap-2">
-																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
-																			</div>
-																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<th scope="row">
-																		<div class="form-check">
-																			<input class="form-check-input" type="checkbox"
-																				name="chk_child" value="option1">
-																		</div>
-																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
-																	<td>
-																		<div class="d-flex gap-2">
-																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
-																			</div>
-																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<th scope="row">
-																		<div class="form-check">
-																			<input class="form-check-input" type="checkbox"
-																				name="chk_child" value="option1">
-																		</div>
-																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
-																	<td>
-																		<div class="d-flex gap-2">
-																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
-																			</div>
-																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
-																			</div>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<th scope="row">
-																		<div class="form-check">
-																			<input class="form-check-input" type="checkbox"
-																				name="chk_child" value="option1">
-																		</div>
-																	</th>
-																	<td class="customer_name">Mary Cousar</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="phone">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
-																	<td>
-																		<div class="d-flex gap-2">
-																			<div class="edit">
-																				<button class="btn btn-sm btn-success edit-item-btn">EDIT</button>
-																			</div>
-																			<div class="remove">
-																				<button
-																					class="btn btn-sm btn-danger remove-item-btn">REMOVE</button>
+																				<a class="btn btn-sm btn-danger remove-item-btn">REMOVE</a>
 																			</div>
 																		</div>
 																	</td>
 																</tr>
 															</tbody>
 														</table>
-														<div class="noresult" style="display: none">
+														<div class="noresult" th:if="${buyers.totalElements == 0}">
 															<div class="text-center">
-																<h5 class="mt-2">NO RESULTs HERE.</h5>
-																<p class="text-muted mb-0">TRY AGAIN.</p>
+																<h5 class="mt-2">검색 결과가 존재하지 않습니다.</h5>
+																<p class="text-muted mb-0">나의 고객 회원가입 발생 시 이메일을 통해 안내됩니다.</p>
 															</div>
 														</div>
 													</div>
 
 													<div class="d-flex justify-content-end">
 														<div class="pagination-wrap hstack gap-1">
-															<a class="page-item pagination-prev disabled"
-																href="javascript:void(0);"> FIRST </a>
-															<a class="page-item pagination-prev disabled"
-																href="javascript:void(0);"> PREVIOUS </a>	
-															<a class="page-item pagination-next"
-																href="javascript:void(0);"> 1 </a>
-															<a class="page-item pagination-next"
-															href="javascript:void(0);"> 2 </a>
-															<a class="page-item pagination-next"
-															href="javascript:void(0);"> 3 </a>
-															<a class="page-item pagination-next"
-																href="javascript:void(0);"> NEXT </a>
-															<a class="page-item pagination-next"
-																href="javascript:void(0);"> LAST </a>	
+															<nav aria-label="navigation">
+																<ul class="pagination justify-content-center">
+																	<li class="page-item"
+																		th:classappend="${1 == buyers.pageable.pageNumber+1} ? 'disabled'">
+																		<a class="page-link" href="#"
+																		th:href="@{/member/clientManager(page=0, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}"
+																		tabindex="-1" aria-disabled="true">First</a>
+																	</li>
+																	<li class="page-item"
+																		th:classappend="${1 == buyers.pageable.pageNumber+1} ? 'disabled'">
+																		<a class="page-link" href="#"
+																		th:href="@{/member/clientManager(page=${buyers.pageable.pageNumber - 1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}"
+																		tabindex="-1" aria-disabled="true">Previous</a>
+																	</li>
+																	<li class="page-item"
+																		th:classappend="${i == buyers.pageable.pageNumber+1} ? 'disabled'"
+																		th:each="i : ${#numbers.sequence(startPage, endPage)}">
+																		<a	class="page-link" href="#" th:text=${i}
+																		th:href="@{/member/clientManager(page=${i-1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}">1</a>
+																	</li>
+																	<li class="page-item"
+																		th:classappend="${buyers.totalPages == buyers.pageable.pageNumber + 1} ? 'disabled'">
+																		<a class="page-link" href="#"
+																		th:href="@{/member/clientManager(page=${buyers.pageable.pageNumber + 1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}">Next</a>
+																	</li>
+																	<li class="page-item"
+																		th:classappend="${buyers.totalPages == buyers.pageable.pageNumber + 1} ? 'disabled'">
+																		<a class="page-link" href="#"
+																		th:href="@{/member/clientManager(page=${buyers.totalPages-1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}">Last</a>
+																	</li>
+																</ul>
+															</nav>
 														</div>
 													</div>
 												</div>
@@ -389,8 +209,12 @@
 
 	</div>
 
-
+	
 	<th:block th:replace="fragments/common :: scriptSrc"></th:block>
+	<script src="/assets/js/search.js"></script>
+	 <script th:inline="javascript">
+   		var searchType = /*[[${searchType}]]*/ 'default';
+    </script>
 </body>
 
 </html>

@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.TomoAdministration.constant.Aes256Util;
 import com.dev.TomoAdministration.dto.TokenInfo;
+import com.dev.TomoAdministration.model.AccessLog;
 import com.dev.TomoAdministration.model.Buyer;
 import com.dev.TomoAdministration.model.Member;
 import com.dev.TomoAdministration.repository.BuyerRepository;
 import com.dev.TomoAdministration.repository.MemberRepository;
+import com.dev.TomoAdministration.service.AccessLogService;
 import com.dev.TomoAdministration.service.BuyerLogService;
 import com.dev.TomoAdministration.service.BuyerService;
 import com.dev.TomoAdministration.service.EmailService;
@@ -63,6 +65,9 @@ public class ApiController {
 	@Autowired
 	EmailService emailService;
 	
+	@Autowired
+	AccessLogService accessLogService;
+	
 	@RequestMapping("/jwtTest")
 	@ResponseBody
 	public String jwtTest(Aes256Util util) throws JsonProcessingException, InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
@@ -87,6 +92,37 @@ public class ApiController {
 		
 		
 		return deco;
+	}
+	
+	@PostMapping(value="/paymentLogging")
+	public String paymentLogging(
+			@RequestParam(name = "username", required = false) String username,
+			@RequestParam(name = "price", required = false) String price,
+			@RequestParam(name = "type", required = false) String type
+			) throws EncoderException {
+		
+		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
+		for(Member member : adminUsers) {
+			smsService.sendMessage(member.getMemberPhoneNumber(), "최종 구매자의 충전 활동이 발생하였습니다.");
+		}
+		return "success";
+	}
+	
+	@PostMapping(value="/accessLogging")
+	public String accessLogging(
+			@RequestParam(name = "device", required = false) String device,
+			@RequestParam(name = "exAddress", required = false) String exAddress,
+			@RequestParam(name = "ipAddress", required = false) String ipAddress,
+			@RequestParam(name = "language", required = false) String language
+			) throws EncoderException {
+		AccessLog log = new AccessLog();
+		
+		log.setAccessLogDevice(device);
+		log.setAccessLogIp(ipAddress);
+		log.setAccessLogLang(language);
+		log.setAccessLogEx(exAddress);
+		accessLogService.insertLog(log);		
+		return "success";
 	}
 	
 	@PostMapping(value="/buyerLogging")
@@ -118,13 +154,21 @@ public class ApiController {
 		Boolean sign = true;
 		if(parent.equals("snstomo")) {
 			sign = false;
+			buyerService.buyerRegistration(
+					memberRepository.findByUsername("admin").get().getMemberId(), 
+					username, 
+					email, 
+					rate, 
+					sign);
+		}else {
+			buyerService.buyerRegistration(
+					memberRepository.findByUsername(parent).get().getMemberId(), 
+					username, 
+					email, 
+					rate, 
+					sign);
 		}
-		buyerService.buyerRegistration(
-				memberRepository.findByUsername("admin").get().getMemberId(), 
-				username, 
-				email, 
-				rate, 
-				sign);
+		
 		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
 		for(Member member : adminUsers) {
 			smsService.sendMessage(member.getMemberPhoneNumber(), "최종 구매자 회원가입이 발생하였습니다.");
