@@ -98,12 +98,15 @@ public class ApiController {
 	public String paymentLogging(
 			@RequestParam(name = "username", required = false) String username,
 			@RequestParam(name = "price", required = false) String price,
-			@RequestParam(name = "type", required = false) String type
+			@RequestParam(name = "type", required = false) String type,
+			@RequestParam(name="peopleName", required = false) String peopleName
 			) throws EncoderException {
 		
 		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
 		for(Member member : adminUsers) {
-			smsService.sendMessage(member.getMemberPhoneNumber(), "최종 구매자의 충전 활동이 발생하였습니다.");
+			smsService.sendMessage(member.getMemberPhoneNumber(), 
+					peopleName+"님(TOMO ID : " + username + ")님이 " + type + "을 통해 " + price + "엔 충전을"
+							+ " 신청하였습니다." );
 		}
 		return "success";
 	}
@@ -132,9 +135,9 @@ public class ApiController {
 			@RequestParam(name = "username", required = false) String username
 			) throws EncoderException {
 		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
-		for(Member member : adminUsers) {
-			smsService.sendMessage(member.getMemberPhoneNumber(), "최종 구매자의 구매 활동이 발생하였습니다.");
-		}
+//		for(Member member : adminUsers) {
+//			smsService.sendMessage(member.getMemberPhoneNumber(), "최종 구매자의 구매 활동이 발생하였습니다.");
+//		}
 		buyerLogService.buyerLogging(link, username, price);
 		return "success";
 	}
@@ -169,10 +172,10 @@ public class ApiController {
 					sign);
 		}
 		
-		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
-		for(Member member : adminUsers) {
-			smsService.sendMessage(member.getMemberPhoneNumber(), "최종 구매자 회원가입이 발생하였습니다.");
-		}
+//		List<Member> adminUsers = memberRepository.findAllByMemberRole("ROLE_ADMIN");
+//		for(Member member : adminUsers) {
+//			smsService.sendMessage(member.getMemberPhoneNumber(), "최종 구매자 회원가입이 발생하였습니다.");
+//		}
 		
 		ExecutorService executorService = Executors.newCachedThreadPool();
 		executorService.submit(() -> {
