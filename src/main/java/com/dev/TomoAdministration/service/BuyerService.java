@@ -23,7 +23,7 @@ public class BuyerService {
 			Long parent,
 			String username,
 			String email,
-			int rate,
+			Long rate,
 			Boolean sign
 			) {
 		Buyer buyer = new Buyer();

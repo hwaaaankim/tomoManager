@@ -46,25 +46,18 @@
 											<div class="card-body">
 												<div class="listjs-table" id="customerList">
 													<div class="row g-4 mb-3">
-														<div class="col-sm-auto">
-															<div>
-																<button type="button" class="btn btn-success add-btn">
-																	<i class="ri-add-line align-bottom me-1"></i> ADD CLIENT
-																</button>
-															</div>
-														</div>
 														<div class="col-sm">
-															<form role="form" method="POST" th:action="@{/member/clientManager}">
+															<form role="form" method="POST" th:action="@{/member/calculation}">
 																<div class="d-flex justify-content-sm-end">
-																	<div class="ms-2">
+																	<div class="ms-2" style="margin-right:10px;">
 																		<select class="form-control" th:name="size" id="pageSize">
-																			<option th:value="10" th:selected="${buyers.pageable.pageSize}=='10'">10개씩 보기</option>
-																			<option th:value="30" th:selected="${buyers.pageable.pageSize}=='30'">30개씩 보기</option>
-																			<option th:value="50" th:selected="${buyers.pageable.pageSize}=='50'">50개씩 보기</option>
-																			<option th:value="100" th:selected="${buyers.pageable.pageSize}=='100'">100개씩 보기</option>
+																			<option th:value="10" th:selected="${buyers.pageable.pageSize}=='10'">10件表示</option>
+																			<option th:value="30" th:selected="${buyers.pageable.pageSize}=='30'">30件表示</option>
+																			<option th:value="50" th:selected="${buyers.pageable.pageSize}=='50'">50件表示</option>
+																			<option th:value="100" th:selected="${buyers.pageable.pageSize}=='100'">100件表示</option>
 																		</select>
 																	</div>
-																	<button type="submit" class="btn btn-success"> 정렬 </button>
+																	<button type="submit" class="btn btn-success"> 検索 </button>
 																</div>
 															</form>
 														</div>
@@ -81,12 +74,11 @@
 																				id="checkAll" value="option">
 																		</div>
 																	</th>
-																	<th>SNSTOMO ID</th>
-																	<th class="sort">SNSTOMO EMAIL</th>
-																	<th class="sort">JOINING DATE</th>
-																	<th class="sort">BONUS RATE</th>
-																	<th>STATUS</th>
-																	<th>MANAGEMENT</th>
+																	<th>精算期間</th>
+																	<th class="sort">精算金額</th>
+																	<th class="sort">精算金 支給日</th>
+																	<th class="sort">精算状態</th>
+																	<th>管理</th>
 																</tr>
 															</thead>
 															<tbody class="list form-check-all">
@@ -98,29 +90,27 @@
 																		</div>
 																	</th>
 																	<td class="customer_name">
-																	<a th:href="@{|/member/clientDetail/${b.buyerId}|}" th:text="${b.buyerUsername}">Mary Cousar</a></td>
-																	<td class="phone" th:text="${b.buyerEmail}">580-464-4694</td>
-																	<td class="phone" th:text="${b.buyerJoinDate}">580-464-4694</td>
-																	<td class="phone" th:text="${b.buyerBonusRate}">580-464-4694</td>
-																	<td class="status"><span
-																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
+																	<a>[[${b.startDate}]] ~ [[${b.endDate}]]</a></td>
+																	<td class="phone" th:text="${b.price}">580-464-4694</td>
+																	<td class="phone" th:text="${b.paidDate}">580-464-4694</td>
+																	<td th:if="${b.sign == false}" class="status"><span
+																		class="badge bg-success-subtle text-warning text-uppercase">Unpaid</span></td>
+																	<td th:if="${b.sign == true}" class="status"><span
+																		class="badge bg-success-subtle text-success text-uppercase">Paid</span></td>	
 																	<td>
 																		<div class="d-flex gap-2">
 																			<div class="edit">
-																				<a class="btn btn-sm btn-success edit-item-btn">EDIT</a>
-																			</div>
-																			<div class="remove">
-																				<a class="btn btn-sm btn-danger remove-item-btn">REMOVE</a>
+																				<a class="btn btn-sm btn-success edit-item-btn">DETAIL</a>
 																			</div>
 																		</div>
 																	</td>
 																</tr>
 															</tbody>
 														</table>
-														<div class="noresult" th:if="${buyers.totalElements == 0}">
+													<div class="noresult" th:if="${buyers.totalElements == 0}">
 															<div class="text-center">
-																<h5 class="mt-2">검색 결과가 존재하지 않습니다.</h5>
-																<p class="text-muted mb-0">나의 고객 회원가입 발생 시 이메일을 통해 안내됩니다.</p>
+																<h5 class="mt-2">検索結果がありません</h5>
+																<p class="text-muted mb-0">自分の購買者が会員登録をするとe-mailにて通知されます。</p>
 															</div>
 														</div>
 													</div>
@@ -132,35 +122,30 @@
 																	<li class="page-item"
 																		th:classappend="${1 == buyers.pageable.pageNumber+1} ? 'disabled'">
 																		<a class="page-link" href="#"
-																		th:href="@{/member/clientManager(page=0, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
-																		,endDate=${param.endDate})}"
+																		th:href="@{/member/calculation(page=0, size=${param.size})}"
 																		tabindex="-1" aria-disabled="true">First</a>
 																	</li>
 																	<li class="page-item"
 																		th:classappend="${1 == buyers.pageable.pageNumber+1} ? 'disabled'">
 																		<a class="page-link" href="#"
-																		th:href="@{/member/clientManager(page=${buyers.pageable.pageNumber - 1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
-																		,endDate=${param.endDate})}"
+																		th:href="@{/member/calculation(page=${buyers.pageable.pageNumber - 1}, size=${param.size})}"
 																		tabindex="-1" aria-disabled="true">Previous</a>
 																	</li>
 																	<li class="page-item"
 																		th:classappend="${i == buyers.pageable.pageNumber+1} ? 'disabled'"
 																		th:each="i : ${#numbers.sequence(startPage, endPage)}">
 																		<a	class="page-link" href="#" th:text=${i}
-																		th:href="@{/member/clientManager(page=${i-1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
-																		,endDate=${param.endDate})}">1</a>
+																		th:href="@{/member/calculation(page=${i-1}, size=${param.size})}">1</a>
 																	</li>
 																	<li class="page-item"
 																		th:classappend="${buyers.totalPages == buyers.pageable.pageNumber + 1} ? 'disabled'">
 																		<a class="page-link" href="#"
-																		th:href="@{/member/clientManager(page=${buyers.pageable.pageNumber + 1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
-																		,endDate=${param.endDate})}">Next</a>
+																		th:href="@{/member/calculation(page=${buyers.pageable.pageNumber + 1}, size=${param.size})}">Next</a>
 																	</li>
 																	<li class="page-item"
 																		th:classappend="${buyers.totalPages == buyers.pageable.pageNumber + 1} ? 'disabled'">
 																		<a class="page-link" href="#"
-																		th:href="@{/member/clientManager(page=${buyers.totalPages-1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
-																		,endDate=${param.endDate})}">Last</a>
+																		th:href="@{/member/calculation(page=${buyers.totalPages-1}, size=${param.size})}">Last</a>
 																	</li>
 																</ul>
 															</nav>

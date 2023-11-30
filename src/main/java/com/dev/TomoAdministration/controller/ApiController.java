@@ -153,7 +153,7 @@ public class ApiController {
 			Model model,
 			Buyer buyer
 			) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, JsonMappingException, JsonProcessingException, EncoderException {
-		
+		Long finalRate = (long)rate;
 		Boolean sign = true;
 		if(parent.equals("snstomo")) {
 			sign = false;
@@ -161,14 +161,14 @@ public class ApiController {
 					memberRepository.findByUsername("admin").get().getMemberId(), 
 					username, 
 					email, 
-					rate, 
+					finalRate, 
 					sign);
 		}else {
 			buyerService.buyerRegistration(
 					memberRepository.findByUsername(parent).get().getMemberId(), 
 					username, 
 					email, 
-					rate, 
+					finalRate, 
 					sign);
 		}
 		

@@ -42,7 +42,7 @@ public class Buyer {
 	private String buyerEmail;
 	
 	@Column(name="BUYER_BONUSRATE")
-	private int buyerBonusRate;
+	private Long buyerBonusRate;
 	
 	@Column(name="BUYER_JOINDATE")
 	private Date buyerJoinDate;
