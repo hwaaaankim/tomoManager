@@ -119,12 +119,29 @@ lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" da
 					<div id="two-column-menu"></div>
 					<ul class="navbar-nav" id="navbar-nav">
 						<li class="menu-title"><span data-key="t-menu">Menu</span></li>
+						<li class="nav-item">
+                            <a class="nav-link menu-link" href="#sidebarMaps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMaps">
+                                <i class="ri-map-pin-line"></i> <span data-key="t-maps">HOME</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="sidebarMaps">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="/index" class="nav-link" data-key="t-google">
+                                            HOME
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 						<li class="nav-item"
-							sec:authorize = "hasAnyRole('MEMBER', 'SUBMEMBER')"
-						><a class="nav-link menu-link"
-							href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
-							aria-expanded="false" aria-controls="sidebarDashboards"> <i
-								class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">My Menu</span>
+							sec:authorize = "hasAnyRole('MEMBER', 'SUBMEMBER')">
+						<a class="nav-link menu-link"
+							href="#sidebarDashboards" 
+							data-bs-toggle="collapse" 
+							role="button"
+							aria-expanded="false" 
+							aria-controls="sidebarDashboards"> 
+							<i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">My Menu</span>
 						</a>
 							<div class="collapse menu-dropdown" id="sidebarDashboards">
 								<ul class="nav nav-sm flex-column">
@@ -138,9 +155,8 @@ lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" da
 							</div>
 						</li>
 						
-						<li class="nav-item"
-						    sec:authorize = "hasRole('ADMIN')"
-						><a class="nav-link menu-link"
+						<li class="nav-item" sec:authorize = "hasRole('ADMIN')">
+						<a class="nav-link menu-link"
 							href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
 							aria-expanded="false" aria-controls="sidebarDashboards"> <i
 								class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">My Menu</span>
@@ -168,11 +184,11 @@ lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" da
 							<div class="collapse menu-dropdown" id="sidebarAuth">
 								<ul class="nav nav-sm flex-column">
 									<li
-									 sec:authorize = "hasRole('MEMBER')"
+									 sec:authorize = "hasRole('DELETE')"
 									 class="nav-item"><a href="/member/dealerManager"
 										class="nav-link" data-key="t-analytics"> ２次販売者管理</a></li>
 									<li
-									 sec:authorize = "hasRole('ADMIN')"
+									 sec:authorize = "hasRole('DELETE')"
 									 class="nav-item"><a href="/member/subMemberRegistrationCheck"
 										class="nav-link" data-key="t-analytics"> サブディーラー申請管理 </a></li>	
 									<li class="nav-item"><a href="/member/clientManager"
@@ -208,7 +224,7 @@ lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" da
 						</a>
 							<div class="collapse menu-dropdown" id="sidebarPages">
 								<ul class="nav nav-sm flex-column">
-									<li class="nav-item"><a href="#"
+									<li class="nav-item"><a href="/member/calculation"
 										class="nav-link" data-key="t-analytics"> 精算 </a></li>
 								</ul>
 							</div>
@@ -244,9 +260,6 @@ lang="en" data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg" da
 	    <script src="/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
 	    <script src="/assets/js/plugins.js"></script>
 	    <script src="/assets/js/app.js"></script>
-	    <script src="/assets/js/pages/particles.app.js"></script>
-	    <script src="/assets/js/pages/dashboard-ecommerce.init.js"></script>
-	    <script src="/assets/libs/swiper/swiper-bundle.min.js"></script>
 	    <script src="/assets/libs/apexcharts/apexcharts.min.js"></script>
 	    <script src="/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
 	    <script src="/assets/libs/jsvectormap/maps/world-merc.js"></script>

@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +58,7 @@ public class MemberController {
 	@Autowired
 	BuyerService buyerService;
 	
-	@RequestMapping("/myInfo")
+	@GetMapping("/myInfo")
 	public String myInfo(
 			Model model,
 			Principal principal
@@ -68,7 +69,7 @@ public class MemberController {
 		return "member/information/information";
 	}
 	
-	@RequestMapping("/clientManager")
+	@GetMapping("/clientManager")
 	public String clientManager(
 			Principal principal,
 			Model model,
@@ -109,7 +110,7 @@ public class MemberController {
 		return "member/buyer/clientManager";
 	}
 	
-	@RequestMapping("/clientDetail/{id}")
+	@GetMapping("/clientDetail/{id}")
 	public String clientDetail(
 			@PathVariable Long id,
 			Model model
@@ -127,7 +128,7 @@ public class MemberController {
 		return "redirect:/member/myInfo";
 	}
 	
-	@RequestMapping("/editInformation")
+	@GetMapping("/editInformation")
 	public String editInformation(
 			Model model,
 			Principal principal
@@ -178,7 +179,46 @@ public class MemberController {
 		return "member/information/makeLink";
 	}
 	
-	
+	@GetMapping("/calculation")
+	public String calculation(
+			Principal principal,
+			Model model,
+			@PageableDefault(size = 10) Pageable pageable,
+			@RequestParam(required = false) String searchType,
+			@RequestParam(required = false) String searchWord,
+			@RequestParam(required = false) String startDate, 
+			@RequestParam(required = false) String endDate
+			) throws ParseException {
+		Member member = memberRepository.findByUsername(principal.getName()).get();
+		Page<Buyer> buyers = null;
+		if(searchType==null || "none".equals(searchType)) {
+			buyers = buyerRepository.findAllByBuyerMemberIdOrderByBuyerJoinDateDesc(member.getMemberId(), pageable);
+		}else if("username".equals(searchType)) {
+			if("".equals(searchWord)) {
+				buyers = buyerRepository.findAllByBuyerMemberIdOrderByBuyerJoinDateDesc(member.getMemberId(), pageable);
+			}else {
+				buyers = buyerRepository.findAllByBuyerUsernameAndBuyerMemberIdOrderByBuyerJoinDateDesc(member.getMemberId(), pageable, searchWord);
+			}
+		}else if("email".equals(searchType)) {
+			if("".equals(searchWord)) {
+				buyers = buyerRepository.findAllByBuyerMemberIdOrderByBuyerJoinDateDesc(member.getMemberId(), pageable);
+			}else {
+				buyers = buyerRepository.findAllByBuyerEmailAndBuyerMemberIdOrderByBuyerJoinDateDesc(member.getMemberId(), pageable, searchWord);
+			}
+		}else if("period".equals(searchType)) {
+			buyers = buyerService.findByDate(member.getMemberId(), pageable, startDate, endDate);
+		}else {
+			buyers = buyerRepository.findAllByBuyerMemberIdOrderByBuyerJoinDateDesc(member.getMemberId(), pageable);
+		}
+		
+		int startPage = Math.max(1, buyers.getPageable().getPageNumber() - 4);
+		int endPage = Math.min(buyers.getTotalPages(), buyers.getPageable().getPageNumber() + 4);
+		model.addAttribute("buyers", buyers);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("searchType", searchType);
+		return "member/calculation/calculation";
+	}
 	
 	@PostMapping("/createLink")
 	public String createLink(

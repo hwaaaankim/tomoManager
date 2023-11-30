@@ -1,0 +1,193 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+	data-layout="twocolumn" data-sidebar="light" data-sidebar-size="lg"
+	data-sidebar-image="none" data-preloader="disable">
+
+<head th:replace="fragments/common :: headSrc">
+
+</head>
+
+<body>
+
+	<div id="layout-wrapper">
+
+
+		<th:block th:replace="fragments/common :: headerSrc"></th:block>
+		<th:block th:replace="fragments/common :: navSrc"></th:block>
+
+		<div class="main-content">
+
+			<div class="page-content">
+				<div class="container-fluid">
+
+					<div class="row">
+						<div class="col-12">
+
+							<div class="h-100">
+								<div class="row mb-3 pb-1">
+									<div class="col-12">
+										<div
+											class="d-flex align-items-lg-center flex-lg-row flex-column">
+											<div class="flex-grow-1">
+												<h4 class="fs-16 mb-1">SNSTOMOのアフィリエイトシステムにご参加していただき誠にありがとうございます。</h4>
+												<p class="text-muted mb-0">自身の活動によって発生した売上の概要を確認できるページです。</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="card">
+											<div class="card-header">
+												<h4 class="card-title mb-0">CLIENT MANAGEMENT SYSTEM</h4>
+											</div>
+
+											<div class="card-body">
+												<div class="listjs-table" id="customerList">
+													<div class="row g-4 mb-3">
+														<div class="col-sm-auto">
+															<div>
+																<button type="button" class="btn btn-success add-btn">
+																	<i class="ri-add-line align-bottom me-1"></i> ADD CLIENT
+																</button>
+															</div>
+														</div>
+														<div class="col-sm">
+															<form role="form" method="POST" th:action="@{/member/clientManager}">
+																<div class="d-flex justify-content-sm-end">
+																	<div class="ms-2">
+																		<select class="form-control" th:name="size" id="pageSize">
+																			<option th:value="10" th:selected="${buyers.pageable.pageSize}=='10'">10개씩 보기</option>
+																			<option th:value="30" th:selected="${buyers.pageable.pageSize}=='30'">30개씩 보기</option>
+																			<option th:value="50" th:selected="${buyers.pageable.pageSize}=='50'">50개씩 보기</option>
+																			<option th:value="100" th:selected="${buyers.pageable.pageSize}=='100'">100개씩 보기</option>
+																		</select>
+																	</div>
+																	<button type="submit" class="btn btn-success"> 정렬 </button>
+																</div>
+															</form>
+														</div>
+													</div>
+
+													<div class="table-responsive mt-3 mb-1">
+														<table class="table align-middle table-nowrap"
+															id="customerTable">
+															<thead class="table-light">
+																<tr>
+																	<th scope="col" style="width: 50px;">
+																		<div class="form-check">
+																			<input class="form-check-input" type="checkbox"
+																				id="checkAll" value="option">
+																		</div>
+																	</th>
+																	<th>SNSTOMO ID</th>
+																	<th class="sort">SNSTOMO EMAIL</th>
+																	<th class="sort">JOINING DATE</th>
+																	<th class="sort">BONUS RATE</th>
+																	<th>STATUS</th>
+																	<th>MANAGEMENT</th>
+																</tr>
+															</thead>
+															<tbody class="list form-check-all">
+																<tr th:each="b:${buyers}">
+																	<th scope="row">
+																		<div class="form-check">
+																			<input class="form-check-input" type="checkbox"
+																				name="chk_child" value="option1">
+																		</div>
+																	</th>
+																	<td class="customer_name">
+																	<a th:href="@{|/member/clientDetail/${b.buyerId}|}" th:text="${b.buyerUsername}">Mary Cousar</a></td>
+																	<td class="phone" th:text="${b.buyerEmail}">580-464-4694</td>
+																	<td class="phone" th:text="${b.buyerJoinDate}">580-464-4694</td>
+																	<td class="phone" th:text="${b.buyerBonusRate}">580-464-4694</td>
+																	<td class="status"><span
+																		class="badge bg-success-subtle text-success text-uppercase">Active</span></td>
+																	<td>
+																		<div class="d-flex gap-2">
+																			<div class="edit">
+																				<a class="btn btn-sm btn-success edit-item-btn">EDIT</a>
+																			</div>
+																			<div class="remove">
+																				<a class="btn btn-sm btn-danger remove-item-btn">REMOVE</a>
+																			</div>
+																		</div>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+														<div class="noresult" th:if="${buyers.totalElements == 0}">
+															<div class="text-center">
+																<h5 class="mt-2">검색 결과가 존재하지 않습니다.</h5>
+																<p class="text-muted mb-0">나의 고객 회원가입 발생 시 이메일을 통해 안내됩니다.</p>
+															</div>
+														</div>
+													</div>
+
+													<div class="d-flex justify-content-end">
+														<div class="pagination-wrap hstack gap-1">
+															<nav aria-label="navigation">
+																<ul class="pagination justify-content-center">
+																	<li class="page-item"
+																		th:classappend="${1 == buyers.pageable.pageNumber+1} ? 'disabled'">
+																		<a class="page-link" href="#"
+																		th:href="@{/member/clientManager(page=0, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}"
+																		tabindex="-1" aria-disabled="true">First</a>
+																	</li>
+																	<li class="page-item"
+																		th:classappend="${1 == buyers.pageable.pageNumber+1} ? 'disabled'">
+																		<a class="page-link" href="#"
+																		th:href="@{/member/clientManager(page=${buyers.pageable.pageNumber - 1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}"
+																		tabindex="-1" aria-disabled="true">Previous</a>
+																	</li>
+																	<li class="page-item"
+																		th:classappend="${i == buyers.pageable.pageNumber+1} ? 'disabled'"
+																		th:each="i : ${#numbers.sequence(startPage, endPage)}">
+																		<a	class="page-link" href="#" th:text=${i}
+																		th:href="@{/member/clientManager(page=${i-1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}">1</a>
+																	</li>
+																	<li class="page-item"
+																		th:classappend="${buyers.totalPages == buyers.pageable.pageNumber + 1} ? 'disabled'">
+																		<a class="page-link" href="#"
+																		th:href="@{/member/clientManager(page=${buyers.pageable.pageNumber + 1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}">Next</a>
+																	</li>
+																	<li class="page-item"
+																		th:classappend="${buyers.totalPages == buyers.pageable.pageNumber + 1} ? 'disabled'">
+																		<a class="page-link" href="#"
+																		th:href="@{/member/clientManager(page=${buyers.totalPages-1}, size=${param.size}, searchType=${param.searchType}, searchWord=${param.searchWord}, startDate=${param.startDate}
+																		,endDate=${param.endDate})}">Last</a>
+																	</li>
+																</ul>
+															</nav>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<th:block th:replace="fragments/common :: footerSrc"></th:block>
+		</div>
+
+	</div>
+
+	
+	<th:block th:replace="fragments/common :: scriptSrc"></th:block>
+	<script src="/assets/js/search.js"></script>
+	 <script th:inline="javascript">
+   		var searchType = /*[[${searchType}]]*/ 'default';
+    </script>
+</body>
+
+</html>

@@ -11,7 +11,7 @@ logging:
 # 동작 환경 설정
 spring:
   profiles:
-    active: prod
+    active: test
   mail:
     host: smtp.gmail.com # 1
     port: 587 # 2
@@ -25,6 +25,7 @@ spring:
           starttls:
             enable: true # 7  
 server:
+  port: 8080
   error:
     whitelabel:
       enabled: true           # 화이트 라벨 페이지 유무 (default : true) 
