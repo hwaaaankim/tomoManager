@@ -92,6 +92,15 @@ public class MemberController {
 		excelService.makeExcelProcess(file, res);
 	}
 	
+	@PostMapping("/makeCalculationProcess")
+	@ResponseBody
+	public void makeCalculationProcess(
+			MultipartFile file,
+			HttpServletResponse res
+			) throws IOException {
+		excelService.makeCalculationProcess(file, res);
+	}
+	
 	@GetMapping("/myInfo")
 	public String myInfo(
 			Model model,
