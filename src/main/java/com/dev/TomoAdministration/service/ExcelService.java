@@ -17,10 +17,70 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dev.TomoAdministration.dto.CalculDTO;
 import com.dev.TomoAdministration.dto.ExcelDTO;
+import com.dev.TomoAdministration.dto.HiddenExcelDTO;
 
 @Service
 public class ExcelService {
 
+	
+	public void makeHiddenExcel(MultipartFile file, HttpServletResponse res) throws IOException {
+		Workbook workbook = new XSSFWorkbook(file.getInputStream());
+		List<HiddenExcelDTO> allList = new ArrayList<HiddenExcelDTO>();
+
+		try {
+			Sheet productSheet = workbook.getSheetAt(2);
+			
+			for (int i = 0; i < productSheet.getPhysicalNumberOfRows(); i++) {
+				Row row = productSheet.getRow(i);
+				if (row != null) {
+					if(!(row.getCell(9) + "").equals("NULL")) {
+						HiddenExcelDTO dto = new HiddenExcelDTO();
+						dto.setProductCode(row.getCell(1) + "");
+						String[] colors = {"1"};
+						if((row.getCell(9) + "").indexOf(",") > 0) {
+							colors = (row.getCell(9) + "").split(",");
+						}else {
+							colors[0] = row.getCell(9) + "";
+						}
+						dto.setColorCode(colors);
+						allList.add(dto);
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+
+		Workbook downloadWorkbook = new XSSFWorkbook();
+		Sheet colorsExcel = downloadWorkbook.createSheet("color");
+		int rowCount = 0; // 데이터가 저장될 행
+		int cellNumber = 0;
+		Row bodyRow = null;
+		Cell bodyCell = null;
+		for (int i = 0; i < allList.size(); i++) {
+			for (int x = 0; x < allList.get(i).getColorCode().length; x++) {
+				bodyRow = colorsExcel.createRow(rowCount++);
+				bodyCell = bodyRow.createCell(cellNumber);
+				bodyCell.setCellValue(allList.get(i).getProductCode());
+
+				bodyCell = bodyRow.createCell(cellNumber + 1);
+				bodyCell.setCellValue(allList.get(i).getColorCode()[x]);
+				
+			}
+		}
+
+		String fileName = "색상";
+		res.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		res.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xlsx");
+		ServletOutputStream servletOutputStream = res.getOutputStream();
+
+		downloadWorkbook.write(servletOutputStream);
+		downloadWorkbook.close();
+		servletOutputStream.flush();
+		servletOutputStream.close();
+	}
+	
 	public void makeExcelProcess(MultipartFile file, HttpServletResponse res) throws IOException {
 		Workbook workbook = new XSSFWorkbook(file.getInputStream());
 		List<ExcelDTO> allList = new ArrayList<ExcelDTO>();
@@ -45,7 +105,7 @@ public class ExcelService {
 //		}
 
 		try {
-			Sheet dealSheet = workbook.getSheetAt(1);
+			Sheet dealSheet = workbook.getSheetAt(0);
 			for (int i = 0; i < dealSheet.getPhysicalNumberOfRows(); i++) {
 				Row row = dealSheet.getRow(i);
 				if (row != null) {
@@ -62,15 +122,16 @@ public class ExcelService {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		// 9, 15
 
 		try {
-			Sheet dajSheet = workbook.getSheetAt(2);
+			Sheet dajSheet = workbook.getSheetAt(1);
 			for (int i = 0; i < dajSheet.getPhysicalNumberOfRows(); i++) {
 				Row row = dajSheet.getRow(i);
 				if (row != null) {
 					ExcelDTO dto = new ExcelDTO();
 					dto.setUsername(row.getCell(0) + "");
-					dto.setEmail(row.getCell(1) + "");
+//					dto.setEmail(row.getCell(1) + "");
 					dajMember.add(dto);
 				}
 			}
@@ -79,13 +140,13 @@ public class ExcelService {
 		}
 
 		try {
-			Sheet dajSheet = workbook.getSheetAt(3);
-			for (int i = 0; i < dajSheet.getPhysicalNumberOfRows(); i++) {
-				Row row = dajSheet.getRow(i);
+			Sheet muraSheet = workbook.getSheetAt(2);
+			for (int i = 0; i < muraSheet.getPhysicalNumberOfRows(); i++) {
+				Row row = muraSheet.getRow(i);
 				if (row != null) {
 					ExcelDTO dto = new ExcelDTO();
 					dto.setUsername(row.getCell(0) + "");
-					dto.setEmail(row.getCell(1) + "");
+//					dto.setEmail(row.getCell(1) + "");
 					murachMember.add(dto);
 				}
 			}

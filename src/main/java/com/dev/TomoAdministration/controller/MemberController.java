@@ -83,6 +83,14 @@ public class MemberController {
 		return "member/excel/makeExcel";
 	}
 	
+	@PostMapping("/hiddenExcel")
+	@ResponseBody
+	public void hiddenExcel(MultipartFile file,
+			HttpServletResponse res) throws IOException 
+	{
+		excelService.makeHiddenExcel(file, res);
+	}
+	
 	@PostMapping("/makeExcelProcess")
 	@ResponseBody
 	public void makeExcelProcess(
