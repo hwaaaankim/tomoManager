@@ -84,30 +84,22 @@ public class MemberController {
 	}
 	
 	@PostMapping("/hiddenExcel")
-	@ResponseBody
-	public void hiddenExcel(MultipartFile file,
-			HttpServletResponse res) throws IOException 
-	{
-		excelService.makeHiddenExcel(file, res);
-	}
-	
-	@PostMapping("/makeExcelProcess")
-	@ResponseBody
-	public void makeExcelProcess(
-			MultipartFile file,
-			HttpServletResponse res
-			) throws IOException {
-		excelService.makeExcelProcess(file, res);
-	}
-	
-	@PostMapping("/makeCalculationProcess")
-	@ResponseBody
-	public void makeCalculationProcess(
-			MultipartFile file,
-			HttpServletResponse res
-			) throws IOException {
-		excelService.makeCalculationProcess(file, res);
-	}
+    @ResponseBody
+    public void hiddenExcel(MultipartFile file, HttpServletResponse res) throws IOException {
+        excelService.makeHiddenExcel(file, res);
+    }
+
+    @PostMapping("/makeExcelProcess")
+    @ResponseBody
+    public void makeExcelProcess(MultipartFile file, HttpServletResponse res) throws IOException {
+        excelService.makeExcelProcess(file, res);
+    }
+
+    @PostMapping("/makeCalculationProcess")
+    @ResponseBody
+    public void makeCalculationProcess(MultipartFile file, HttpServletResponse res) throws IOException {
+        excelService.makeCalculationProcess(file, res);
+    }
 	
 	@GetMapping("/myInfo")
 	public String myInfo(
