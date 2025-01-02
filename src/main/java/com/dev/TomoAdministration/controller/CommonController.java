@@ -147,9 +147,9 @@ public class CommonController {
         });
 		
 		
-		for(Member m : adminUsers) {
-			smsService.sendMessage(m.getMemberPhoneNumber(), "판매자 회원가입이 발생하였습니다.");
-		}
+//		for(Member m : adminUsers) {
+//			smsService.sendMessage(m.getMemberPhoneNumber(), "판매자 회원가입이 발생하였습니다.");
+//		}
 		memberService.save(member);
 		return "all/signin";
 	}
