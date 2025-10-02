@@ -25,7 +25,7 @@ spring:
           starttls:
             enable: true # 7  
 server:
-  port: 8080
+  port: 8081
   error:
     whitelabel:
       enabled: true           # 화이트 라벨 페이지 유무 (default : true) 
@@ -68,7 +68,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MariaDB103Dialect
+        dialect: org.hibernate.dialect.MariaDBDialect
   servlet:
     multipart:
       maxFileSize: 100MB
@@ -99,7 +99,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MariaDB103Dialect
+        dialect: org.hibernate.dialect.MariaDBDialect
   servlet:
     multipart:
       maxFileSize: 100MB
