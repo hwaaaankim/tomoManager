@@ -4,7 +4,6 @@ package com.dev.TomoAdministration.config;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -52,18 +51,18 @@ public class WebSecurityConfig {
     		};
     
 	@Bean
-    public SpringSecurityDialect springSecurityDialect(){
+    SpringSecurityDialect springSecurityDialect(){
         return new SpringSecurityDialect();
     }
     
 	@Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
+    WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
        
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
 			.csrf()
 				.disable()
@@ -90,10 +89,8 @@ public class WebSecurityConfig {
 				.rememberMeParameter("remember")
 				.tokenValiditySeconds(86400)
 				.alwaysRemember(false);
-//				.userDetailsService(userDetailsService);
                 
         return http.build();
     }
-
 }
 

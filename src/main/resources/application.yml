@@ -13,19 +13,24 @@ spring:
   profiles:
     active: test
   mail:
-    host: smtp.gmail.com # 1
-    port: 587 # 2
-    username: 'admin@qlix.co.jp' # 3
-    password: 'dsuvxzcaxhdmrwkb' # 4
+    host: smtp.gmail.com
+    port: 587
+    username: 'admin@qlixjp.com'
+    password: 'fswzohcxtacdgigt'
+    default-encoding: UTF-8        # ✅ 권장
     properties:
       mail:
         smtp:
-          auth: true # 5
-          timeout: 5000 # 6
+          auth: true
+          timeout: 5000
           starttls:
-            enable: true # 7  
+            enable: true
+      throttle-ms: 200
+      log:
+        dir: D:/tomo/log   # ✅ CSV 저장 경로 (윈도우 D:\tomo\log)
+
 server:
-  port: 8081
+  port: 8080
   error:
     whitelabel:
       enabled: true           # 화이트 라벨 페이지 유무 (default : true) 
